@@ -80,52 +80,43 @@ function NewPassword() {
 
   if (!hasValidSession) {
     return (
-      <div className="container">
-        <h1 className="title">Team Ins<span className="brand-accent">p</span>ire</h1>
-        <p style={{ color: '#888', textAlign: 'center' }}>Loading...</p>
+      <div className="newpass-container">
+        <h1 className="newpass-title">Team Ins<span className="newpass-accent">p</span>ire</h1>
+        <p className="newpass-loading-text">Loading...</p>
       </div>
     );
   }
 
   if (isSuccess) {
     return (
-      <div className="container">
-        <h1 className="title">Team Ins<span className="brand-accent">p</span>ire</h1>
+      <div className="newpass-container">
+        <h1 className="newpass-title">Team Ins<span className="newpass-accent">p</span>ire</h1>
         
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#4CAF50' }}>✓</div>
-          <h2 style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '1rem' }}>
-            Password Updated!
-          </h2>
-          <p style={{ color: '#888', marginBottom: '2rem' }}>
+        <div className="newpass-success-container">
+          <div className="newpass-success-icon">✓</div>
+          <h2 className="newpass-success-title">Password Updated!</h2>
+          <p className="newpass-success-text">
             Your password has been successfully updated. Redirecting to login...
           </p>
-          <div className="spinner" style={{ 
-            display: 'inline-block', 
-            width: '20px', 
-            height: '20px', 
-            border: '2px solid #444',
-            borderTop: '2px solid #4CAF50',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite'
-          }}></div>
+          <div className="newpass-success-spinner"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container">
-      <h1 className="title">Team Ins<span className="brand-accent">p</span>ire</h1>
-      <h2 style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '1rem' }}>Reset Password</h2>
+    <div className="newpass-container">
+      <h1 className="newpass-title">Team Ins<span className="newpass-accent">p</span>ire</h1>
+      <h2 className="newpass-subtitle">Reset Password</h2>
       
-      <p style={{ color: '#888', textAlign: 'center', marginBottom: '2rem', maxWidth: '400px' }}>
+      <p className="newpass-description">
         Enter your new password below.
       </p>
       
-      <div className="input-container">
-        <div className="input-with-toggle">
+      <div className="newpass-input-container">
+        <div className="newpass-password-wrapper">
           <input 
+            className="newpass-input newpass-password-input"
             type={showPassword ? "text" : "password"}
             placeholder="New Password"
             value={password}
@@ -133,15 +124,16 @@ function NewPassword() {
           />
           <button 
             type="button"
-            className="toggle-button"
+            className="newpass-toggle-button"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? '○' : '●'}
           </button>
         </div>
         
-        <div className="input-with-toggle">
+        <div className="newpass-password-wrapper">
           <input 
+            className="newpass-input newpass-password-input"
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm New Password"
             value={confirmPassword}
@@ -149,7 +141,7 @@ function NewPassword() {
           />
           <button 
             type="button"
-            className="toggle-button"
+            className="newpass-toggle-button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           >
             {showConfirmPassword ? '○' : '●'}
@@ -158,27 +150,23 @@ function NewPassword() {
       </div>
       
       <button 
-        className="button-primary" 
+        className="newpass-primary-button" 
         onClick={handleSavePassword}
         disabled={isSaving}
       >
         {isSaving ? (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-            <div className="spinner" style={{ 
-              width: '16px', 
-              height: '16px', 
-              border: '2px solid #ffffff40',
-              borderTop: '2px solid #ffffff',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite'
-            }}></div>
+          <div className="newpass-loading">
+            <div className="newpass-spinner"></div>
             Updating password...
           </div>
         ) : (
           'Save New Password'
         )}
       </button>
-      <button className="button-link" onClick={goToLogin}>Back to Login</button>
+      
+      <button className="newpass-link-button" onClick={goToLogin}>
+        Back to Login
+      </button>
     </div>
   );
 }

@@ -60,60 +60,45 @@ function EmailVerify() {
   };
 
   return (
-    <div className="container">
-      <h1 className="title">Team Ins<span className="brand-accent">p</span>ire</h1>
+    <div className="verify-container">
+      <h1 className="verify-title">Team Ins<span className="verify-accent">p</span>ire</h1>
       
       {!isVerified ? (
         <>
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📧</div>
-            <h2 style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '1rem' }}>
-              Check Your Email
-            </h2>
-            <p style={{ color: '#888', marginBottom: '1rem' }}>
+          <div className="verify-pending-container">
+            <div className="verify-pending-icon">📧</div>
+            <h2 className="verify-pending-title">Check Your Email</h2>
+            <p className="verify-pending-text">
               We sent a verification email to:
             </p>
-            <p style={{ color: '#ffffff', fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '2rem' }}>
-              {email}
-            </p>
+            <p className="verify-pending-email">{email}</p>
             
             {isChecking && (
-              <div style={{ color: '#888', fontSize: '0.9rem', marginBottom: '1rem' }}>
-                <div className="spinner" style={{ 
-                  display: 'inline-block', 
-                  width: '12px', 
-                  height: '12px', 
-                  border: '2px solid #444',
-                  borderTop: '2px solid #ff4444',
-                  borderRadius: '50%',
-                  animation: 'spin 1s linear infinite',
-                  marginRight: '8px'
-                }}></div>
-                Checking for verification...
+              <div className="verify-checking-container">
+                <div className="verify-spinner"></div>
+                <span className="verify-checking-text">Checking for verification...</span>
               </div>
             )}
           </div>
           
-          <button className="button-secondary" onClick={editEmail}>
+          <button className="verify-secondary-button" onClick={editEmail}>
             Edit Email
           </button>
-          <button className="button-link" onClick={goToLogin}>
+          <button className="verify-link-button" onClick={goToLogin}>
             Back to Login
           </button>
         </>
       ) : (
         <>
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#4CAF50' }}>✓</div>
-            <h2 style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '1rem' }}>
-              Email Verified!
-            </h2>
-            <p style={{ color: '#888', marginBottom: '2rem' }}>
+          <div className="verify-success-container">
+            <div className="verify-success-icon">✓</div>
+            <h2 className="verify-success-title">Email Verified!</h2>
+            <p className="verify-success-text">
               Your account has been successfully verified.
             </p>
           </div>
           
-          <button className="button-primary" onClick={goToLogin}>
+          <button className="verify-primary-button" onClick={goToLogin}>
             Continue to Login
           </button>
         </>

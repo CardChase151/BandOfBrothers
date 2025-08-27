@@ -51,26 +51,22 @@ function ForgotPassword() {
 
   if (emailSent) {
     return (
-      <div className="container">
-        <h1 className="title">Team Ins<span className="brand-accent">p</span>ire</h1>
+      <div className="forgot-container">
+        <h1 className="forgot-title">Team Ins<span className="forgot-accent">p</span>ire</h1>
         
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📧</div>
-          <h2 style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '1rem' }}>
-            Check Your Email
-          </h2>
-          <p style={{ color: '#888', marginBottom: '1rem' }}>
+        <div className="forgot-success-container">
+          <div className="forgot-success-icon">📧</div>
+          <h2 className="forgot-success-title">Check Your Email</h2>
+          <p className="forgot-success-text">
             If an account with that email exists, we sent you a password reset link to:
           </p>
-          <p style={{ color: '#ffffff', fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '2rem' }}>
-            {email}
-          </p>
-          <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '2rem' }}>
+          <p className="forgot-success-email">{email}</p>
+          <p className="forgot-success-note">
             Check your email and click the link to reset your password.
           </p>
         </div>
         
-        <button className="button-link" onClick={goToLogin}>
+        <button className="forgot-link-button" onClick={goToLogin}>
           Back to Login
         </button>
       </div>
@@ -78,16 +74,17 @@ function ForgotPassword() {
   }
 
   return (
-    <div className="container">
-      <h1 className="title">Team Ins<span className="brand-accent">p</span>ire</h1>
-      <h2 style={{ color: '#ffffff', fontSize: '1.5rem', marginBottom: '1rem' }}>Reset Password</h2>
+    <div className="forgot-container">
+      <h1 className="forgot-title">Team Ins<span className="forgot-accent">p</span>ire</h1>
+      <h2 className="forgot-subtitle">Reset Password</h2>
       
-      <p style={{ color: '#888', textAlign: 'center', marginBottom: '2rem', maxWidth: '400px' }}>
+      <p className="forgot-description">
         Enter your email address and we'll send you a link to reset your password.
       </p>
       
-      <div className="input-container">
+      <div className="forgot-input-container">
         <input 
+          className="forgot-input"
           type="email" 
           placeholder="Email"
           value={email}
@@ -96,27 +93,26 @@ function ForgotPassword() {
       </div>
       
       <button 
-        className="button-primary" 
+        className="forgot-primary-button" 
         onClick={handleSendReset}
         disabled={isSending}
       >
         {isSending ? (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-            <div className="spinner" style={{ 
-              width: '16px', 
-              height: '16px', 
-              border: '2px solid #ffffff40',
-              borderTop: '2px solid #ffffff',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite'
-            }}></div>
+          <div className="forgot-loading">
+            <div className="forgot-spinner"></div>
             Sending reset link...
           </div>
         ) : (
           'Send Reset Link'
         )}
       </button>
-      <button className="button-link" onClick={goToLogin}>Back to Login</button>
+      
+      <button 
+        className="forgot-link-button" 
+        onClick={goToLogin}
+      >
+        Back to Login
+      </button>
     </div>
   );
 }
