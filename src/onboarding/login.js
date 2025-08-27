@@ -88,7 +88,6 @@ function Login() {
         className="button-primary" 
         onClick={handleLogin}
         disabled={isLoggingIn}
-        style={{ maxWidth: '300px' }}
       >
         {isLoggingIn ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
@@ -106,7 +105,7 @@ function Login() {
           'Login'
         )}
       </button>
-      <button className="button-secondary" onClick={goToCreateAccount} style={{ maxWidth: '300px' }}>Create Account</button>
+      <button className="button-secondary" onClick={goToCreateAccount}>Create Account</button>
       <button className="button-link" onClick={goToForgotPassword}>Forgot Password?</button>
     </div>
   );

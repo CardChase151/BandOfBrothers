@@ -130,7 +130,6 @@ function CreateAccount() {
         className="button-primary" 
         onClick={handleCreateAccount}
         disabled={isCreatingAccount}
-        style={{ maxWidth: '300px' }}
       >
         {isCreatingAccount ? (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
