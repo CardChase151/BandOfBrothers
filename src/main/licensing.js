@@ -75,33 +75,31 @@ function Licensing() {
 
   if (loading) {
     return (
-      <div className="container">
+      <div className="app-container">
         <div className="spinner"></div>
       </div>
     );
   }
 
   return (
-    <div className="container">
+    <div className="app-container">
       <button className="back-button" onClick={handleBackToHome}>
         ←
       </button>
       
-      <div className="header">
-        <h1 className="title">Licensing</h1>
-      </div>
+      <h1 className="app-title">Licensing</h1>
 
-      <div className="welcome">
+      <div className="content-section">
         <p>License requirements and study materials</p>
       </div>
 
       {/* License Tabs */}
-      <div className="tabs">
+      <div className="licensing-tabs">
         {licenseTabs.map((tab) => (
           <button
             key={tab}
             onClick={() => handleTabClick(tab)}
-            className={`tab ${activeTab === tab ? 'active' : ''}`}
+            className={`licensing-tab ${activeTab === tab ? 'active' : ''}`}
           >
             {tab === 'Life insurance license' ? 'Life License' : 'Securities License'}
           </button>
@@ -123,14 +121,14 @@ function Licensing() {
           <p>There are no materials available for this license type yet.</p>
         </div>
       ) : (
-        <div className="grid cards">
+        <div className="licensing-grid">
           {licenseItems.map((item) => (
             <div
               key={item.id}
-              className="card"
+              className="licensing-card"
               onClick={() => handleLicenseItemClick(item.url)}
             >
-              <div className="card-image">
+              <div className="licensing-image">
                 <img 
                   src={item.image_url || '/assets/logo.jpg'} 
                   alt={item.title}
@@ -139,7 +137,7 @@ function Licensing() {
                   }}
                 />
                 {item.url && (
-                  <div className="card-overlay">
+                  <div className="licensing-overlay">
                     <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -147,10 +145,10 @@ function Licensing() {
                 )}
               </div>
               
-              <div className="card-content">
-                <h3 className="text-title">{item.title}</h3>
+              <div className="licensing-content">
+                <h3 className="licensing-title">{item.title}</h3>
                 {item.description && (
-                  <p className="text-description">{item.description}</p>
+                  <p className="licensing-description">{item.description}</p>
                 )}
               </div>
             </div>

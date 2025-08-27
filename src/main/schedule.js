@@ -85,23 +85,21 @@ function Schedule() {
 
   if (loading) {
     return (
-      <div className="container">
+      <div className="app-container">
         <div className="spinner"></div>
       </div>
     );
   }
 
   return (
-    <div className="container">
+    <div className="app-container">
       <button className="back-button" onClick={handleBackToHome}>
         ←
       </button>
       
-      <div className="header">
-        <h1 className="title">Schedule</h1>
-      </div>
+      <h1 className="app-title">Schedule</h1>
 
-      <div className="welcome">
+      <div className="content-section">
         <p>Weekly meetings and training sessions</p>
       </div>
 
@@ -119,17 +117,17 @@ function Schedule() {
           <p>There are no scheduled events at this time. Check back later for updates.</p>
         </div>
       ) : (
-        <div className="grid">
+        <div className="schedule-grid">
           {scheduleItems.map((item) => (
-            <div key={item.id} className="card list-item">
-              <div className="icon">
+            <div key={item.id} className="schedule-card">
+              <div className="schedule-icon">
                 <img src="/assets/logo.jpg" alt="Team Inspire" />
               </div>
               
-              <div className="card-content">
+              <div className="schedule-content">
                 {/* Title and Day */}
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.5rem', gap: '1rem' }}>
-                  <h3 className="text-title" style={{ flex: 1, lineHeight: 1.3, margin: 0 }}>{item.title}</h3>
+                <div className="schedule-header">
+                  <h3 className="schedule-title">{item.title}</h3>
                   {item.day_of_week && (
                     <span className="badge">{item.day_of_week}</span>
                   )}
@@ -137,12 +135,12 @@ function Schedule() {
                 
                 {/* Description */}
                 {item.description && (
-                  <p className="text-description" style={{ margin: '0 0 1rem 0', WebkitLineClamp: 4, lineClamp: 4 }}>{item.description}</p>
+                  <p className="schedule-description">{item.description}</p>
                 )}
                 
                 {/* Time Badge */}
                 {item.start_time && item.end_time && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#4CAF50', fontSize: '0.9rem', fontWeight: 500, backgroundColor: 'rgba(76, 175, 80, 0.1)', padding: '6px 10px', borderRadius: '6px', marginBottom: '1rem', width: 'fit-content' }}>
+                  <div className="time-badge">
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <circle cx="12" cy="12" r="10"/>
                       <polyline points="12,6 12,12 16,14"/>
@@ -169,18 +167,15 @@ function Schedule() {
                   
                   {item.url && (
                     <div className="detail-row">
-                      <a 
-                        href={item.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="button-primary"
-                        style={{ marginTop: '8px', flex: 1 }}
+                      <button 
+                        onClick={() => window.open(item.url, '_blank', 'noopener,noreferrer')}
+                        className="join-zoom-button"
                       >
                         <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
-                        Join via Link
-                      </a>
+                        Join Zoom Meeting
+                      </button>
                     </div>
                   )}
                 </div>

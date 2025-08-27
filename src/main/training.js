@@ -84,7 +84,7 @@ function Training() {
 
   if (loading) {
     return (
-      <div className="container">
+      <div className="app-container">
         <div className="spinner"></div>
       </div>
     );
@@ -93,36 +93,34 @@ function Training() {
   // Category Selection View
   if (!selectedCategory) {
     return (
-      <div className="container">
+      <div className="app-container">
         <button className="back-button" onClick={handleBackToHome}>
           ←
         </button>
         
-        <div className="header">
-          <h1 className="title">Training Content</h1>
-        </div>
+        <h1 className="app-title">Training Content</h1>
 
-        <div className="welcome">
+        <div className="content-section">
           <p>Choose a training category to view available resources</p>
         </div>
 
-        <div className="grid">
+        <div className="training-categories">
           {trainingCategories.map((category) => (
             <button
               key={category}
-              className="button-category"
+              className="training-category-card"
               onClick={() => handleCategoryClick(category)}
             >
-              <div className="icon">
+              <div className="training-category-icon">
                 <img src="/assets/logo.jpg" alt="Team Inspire" />
               </div>
-              <div className="text-content">
-                <div className="text-title">{category}</div>
-                <div className="text-subtitle">
+              <div className="training-category-content">
+                <div className="training-category-title">{category}</div>
+                <div className="training-category-subtitle">
                   Training materials and resources
                 </div>
               </div>
-              <div className="arrow">→</div>
+              <div className="training-category-arrow">→</div>
             </button>
           ))}
         </div>
@@ -132,16 +130,14 @@ function Training() {
 
   // Content List View
   return (
-    <div className="container">
+    <div className="app-container">
       <button className="back-button" onClick={handleBackToCategories}>
         ←
       </button>
       
-      <div className="header">
-        <h1 className="title">Training Content</h1>
-      </div>
+      <h1 className="app-title">Training Content</h1>
 
-      <div className="welcome">
+      <div className="content-section">
         <h2>{selectedCategory}</h2>
         <p>Training resources for {selectedCategory.toLowerCase()}</p>
       </div>
@@ -166,14 +162,14 @@ function Training() {
           </button>
         </div>
       ) : (
-        <div className="grid cards">
+        <div className="training-content-grid">
           {contentItems.map((item) => (
             <div
               key={item.id}
-              className="card"
+              className="training-content-card"
               onClick={() => handleContentClick(item.url)}
             >
-              <div className="card-image">
+              <div className="training-content-image">
                 <img 
                   src={item.image_url || '/assets/logo.jpg'} 
                   alt={item.title}
@@ -182,7 +178,7 @@ function Training() {
                   }}
                 />
                 {item.url && (
-                  <div className="card-overlay">
+                  <div className="training-content-overlay">
                     <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z"/>
                     </svg>
@@ -190,15 +186,15 @@ function Training() {
                 )}
               </div>
               
-              <div className="card-content">
-                <h3 className="text-title">{item.title}</h3>
+              <div className="training-content-body">
+                <h3 className="training-content-title">{item.title}</h3>
                 {item.description && (
-                  <p className="text-description">{item.description}</p>
+                  <p className="training-content-description">{item.description}</p>
                 )}
-                <div className="meta">
+                <div className="training-content-meta">
                   <span className="badge">{item.category}</span>
                   {item.url && (
-                    <span className="meta-item">
+                    <span className="training-meta-item">
                       <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                       </svg>
