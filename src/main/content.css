@@ -68,24 +68,27 @@ html, body {
     width: 100%;
   }
   
-  /* New Rep Start Top Banner - Full Width */
-  .new-rep-bar {
+/* New Rep Start Top Banner - Full Width */
+.new-rep-bar {
     background-color: #ff0000;
     color: #ffffff;
-    padding: 12px 20px;
-    border-radius: 0;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: calc(100vw - 40px);
+    justify-content: space-between;
+    width: 100vw;
     cursor: pointer;
     transition: background-color 0.2s ease;
-    margin: -20px -20px 2rem -20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: -20px;
+    margin-bottom: 2rem;
     font-weight: 600;
     font-size: 1rem;
-    position: relative;
-    left: 0;
-    right: 0;
+  }
+  
+  .new-rep-bar span {
+    color: #ffffff !important;
   }
   
   .new-rep-bar:active {
@@ -96,6 +99,7 @@ html, body {
     font-size: 1.2rem;
     font-weight: bold;
     margin-left: auto;
+    color: #ffffff !important;
   }
   
   @media (min-width: 768px) {
@@ -355,7 +359,6 @@ html, body {
       font-size: 0.95rem;
     }
   }
-  
   /* ===========================================
    SCHEDULE COMPONENT STYLES - ADD TO CONTENT.CSS
    =========================================== */

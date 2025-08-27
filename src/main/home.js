@@ -215,9 +215,22 @@ function Home() {
     <>
       <div className="app-container">
         {/* New Rep Start Banner - Full Width at Top */}
-        <div className="new-rep-bar" onClick={handleNewRepStart}>
+        <div onClick={handleNewRepStart} style={{
+          backgroundColor: '#ff0000',
+          color: '#ffffff',
+          padding: '16px 20px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%',
+          marginBottom: '2rem',
+          fontWeight: '600',
+          fontSize: '1rem',
+          cursor: 'pointer',
+          borderRadius: '8px'
+        }}>
           <span>New Rep Start</span>
-          <span className="arrow-right">→</span>
+          <span>→</span>
         </div>
 
         <h1 className="app-title">Team Ins<span className="brand-accent">p</span>ire</h1>
