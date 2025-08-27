@@ -1,243 +1,514 @@
+/* Enhanced Onboarding CSS - Team Inspire */
+/* Modern responsive design with fluid spacing and proper button hierarchy */
+
+:root {
+  /* Color System - Keeping existing colors */
+  --color-bg: #000000;
+  --color-text: #ffffff;
+  --color-accent: #ff0000;
+  --color-accent-hover: #cc0000;
+  --color-input-bg: #2d2d2d;
+  --color-input-border: #444;
+  --color-input-focus: #ff0000;
+  --color-placeholder: #888;
+  --color-secondary: #999;
+  --color-button-secondary: #2d2d2d;
+  --color-button-secondary-border: #555;
+  --color-button-secondary-hover: #3d3d3d;
+  --color-disabled: #666;
+
+  /* Fluid Spacing System */
+  --space-xs: clamp(0.5rem, 1vw, 0.75rem);
+  --space-sm: clamp(0.75rem, 1.5vw, 1rem);
+  --space-md: clamp(1rem, 2vw, 1.25rem);
+  --space-lg: clamp(1.25rem, 2.5vw, 1.5rem);
+  --space-xl: clamp(1.5rem, 3vw, 2rem);
+  --space-2xl: clamp(2rem, 4vw, 2.5rem);
+  --space-3xl: clamp(2.5rem, 5vw, 3rem);
+
+  /* Fluid Typography */
+  --font-title: clamp(1.75rem, 4vw, 2.25rem);
+  --font-subtitle: clamp(1.1rem, 2.5vw, 1.3rem);
+  --font-body: clamp(0.9rem, 1.5vw, 1rem);
+  --font-small: clamp(0.8rem, 1.2vw, 0.9rem);
+
+  /* Component Sizing */
+  --input-height: clamp(48px, 6vw, 54px);
+  --button-height-primary: clamp(50px, 6.5vw, 56px);
+  --button-height-secondary: clamp(46px, 6vw, 52px);
+  --container-width: clamp(280px, 90vw, 400px);
+  --input-width: clamp(260px, 85vw, 360px);
+  --button-width-primary: clamp(240px, 75vw, 320px);
+  --button-width-secondary: clamp(220px, 70vw, 300px);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-button: 0 4px 12px rgba(255, 0, 0, 0.2);
+  --shadow-button-hover: 0 6px 20px rgba(255, 0, 0, 0.3);
+  --shadow-focus: 0 0 0 3px rgba(255, 0, 0, 0.15);
+  --shadow-secondary: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Base Container - Fluid and device-aware */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 40px 20px;
-  background-color: #000000;
+  min-height: 100dvh; /* Dynamic viewport for mobile browsers */
+  padding: var(--space-xl) var(--space-md);
+  background-color: var(--color-bg);
   box-sizing: border-box;
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  
+  /* PWA safe areas */
+  padding-top: max(var(--space-xl), env(safe-area-inset-top));
+  padding-bottom: max(var(--space-lg), env(safe-area-inset-bottom));
+  padding-left: max(var(--space-md), env(safe-area-inset-left));
+  padding-right: max(var(--space-md), env(safe-area-inset-right));
 }
 
+/* Main Title - Fluid scaling */
 .title {
-  font-size: 2.8rem;
-  color: #ffffff;
-  margin-bottom: 2.5rem;
+  font-size: var(--font-title);
+  color: var(--color-text);
+  margin-bottom: var(--space-2xl);
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .brand-accent {
-  color: #ff0000;
+  color: var(--color-accent);
 }
 
-/* Create Account subtitle */
+/* Subtitle styling */
 h2 {
-  color: #ffffff;
-  font-size: 1.4rem;
-  margin: -1rem 0 2rem 0;
+  color: var(--color-text);
+  font-size: var(--font-subtitle);
+  margin: calc(-1 * var(--space-md)) 0 var(--space-2xl) 0;
   text-align: center;
-  font-weight: 400;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
+/* Input Container - Consistent spacing */
 .input-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: var(--space-lg);
   width: 100%;
-  max-width: 360px;
-  margin-bottom: 2.5rem;
+  max-width: var(--input-width);
+  margin-bottom: var(--space-2xl);
 }
 
+/* Enhanced Input Styling */
 input {
-  background-color: #2d2d2d;
-  border: 1px solid #444;
-  color: #ffffff;
-  padding: 16px 18px;
-  border-radius: 10px;
-  font-size: 1rem;
+  background-color: var(--color-input-bg);
+  border: 2px solid var(--color-input-border);
+  color: var(--color-text);
+  padding: 0 var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-body);
   width: 100%;
+  height: var(--input-height);
   box-sizing: border-box;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 input::placeholder {
-  color: #888;
+  color: var(--color-placeholder);
+  opacity: 1;
 }
 
 input:focus {
   outline: none;
-  border-color: #ff0000;
-  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.15);
+  border-color: var(--color-input-focus);
+  box-shadow: var(--shadow-focus);
+  transform: translateY(-1px);
 }
 
+input:hover:not(:focus) {
+  border-color: #666;
+}
+
+/* Password Toggle Container */
 .input-with-toggle {
   position: relative;
   width: 100%;
 }
 
 .input-with-toggle input {
-  padding-right: 50px;
+  padding-right: calc(var(--space-3xl) + var(--space-sm));
 }
 
 .toggle-button {
   position: absolute;
-  right: 15px;
+  right: var(--space-lg);
   top: 50%;
   transform: translateY(-50%);
   background: none;
-  color: #888;
+  color: var(--color-placeholder);
   border: none;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.1rem;
-  transition: color 0.2s ease;
+  font-size: 1.2rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
 }
 
 .toggle-button:hover {
-  color: #ffffff;
+  color: var(--color-text);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
+.toggle-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+/* Enhanced Button System */
 .button-primary {
-  background-color: #ff0000;
+  background-color: var(--color-accent);
   color: white;
   border: none;
-  padding: 16px 32px;
-  border-radius: 10px;
-  font-size: 1rem;
+  padding: 0 var(--space-xl);
+  border-radius: var(--radius-md);
+  font-size: var(--font-body);
   font-weight: 600;
   cursor: pointer;
   width: 100%;
-  max-width: 360px;
-  margin: 12px 0;
+  max-width: var(--button-width-primary);
+  height: var(--button-height-primary);
+  margin: var(--space-sm) 0;
   box-sizing: border-box;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 54px;
+  font-family: inherit;
+  letter-spacing: 0.025em;
+  position: relative;
+  overflow: hidden;
 }
 
 .button-primary:hover:not(:disabled) {
-  background-color: #cc0000;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button-hover);
+}
+
+.button-primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-button);
 }
 
 .button-primary:disabled {
-  background-color: #666;
+  background-color: var(--color-disabled);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+  opacity: 0.7;
 }
 
+.button-primary:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus), var(--shadow-button);
+}
+
+/* Secondary Button - Proper hierarchy */
 .button-secondary {
-  background-color: #2d2d2d;
-  color: white;
-  border: 1px solid #555;
-  padding: 16px 32px;
-  border-radius: 10px;
-  font-size: 1rem;
+  background-color: var(--color-button-secondary);
+  color: var(--color-text);
+  border: 2px solid var(--color-button-secondary-border);
+  padding: 0 var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-body);
   font-weight: 500;
   cursor: pointer;
   width: 100%;
-  max-width: 360px;
-  margin: 8px 0;
+  max-width: var(--button-width-secondary);
+  height: var(--button-height-secondary);
+  margin: var(--space-xs) 0;
   box-sizing: border-box;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 54px;
+  font-family: inherit;
+  position: relative;
 }
 
 .button-secondary:hover {
-  background-color: #3d3d3d;
-  border-color: #ff0000;
+  background-color: var(--color-button-secondary-hover);
+  border-color: var(--color-accent);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-secondary);
 }
 
+.button-secondary:active {
+  transform: translateY(0);
+}
+
+.button-secondary:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* Link Button - Subtle and accessible */
 .button-link {
   background: none;
-  color: #999;
+  color: var(--color-secondary);
   border: none;
-  font-size: 0.95rem;
+  font-size: var(--font-small);
   cursor: pointer;
-  margin: 20px 0 0 0;
+  margin: var(--space-xl) 0 var(--space-md) 0;
   text-decoration: underline;
-  padding: 12px;
-  transition: color 0.2s ease;
+  padding: var(--space-sm) var(--space-md);
+  transition: all 0.2s ease;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  min-height: 44px; /* iOS accessibility */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button-link:hover {
-  color: #ff0000;
+  color: var(--color-accent);
+  background-color: rgba(255, 0, 0, 0.05);
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .container {
-    padding: 30px 20px;
-    justify-content: flex-start;
-    padding-top: 100px;
-  }
-  
-  .title {
-    font-size: 2.2rem;
-    margin-bottom: 2rem;
-  }
-  
-  .input-container {
-    max-width: 300px;
-    gap: 18px;
-    margin-bottom: 2rem;
-  }
-  
-  input {
-    padding: 14px 16px;
-    font-size: 0.95rem;
-  }
-  
-  .input-with-toggle input {
-    padding-right: 45px;
-  }
-  
-  .toggle-button {
-    right: 12px;
-    width: 22px;
-    height: 22px;
-  }
-  
-  .button-primary,
-  .button-secondary {
-    max-width: 300px;
-    padding: 14px 24px;
-    font-size: 0.95rem;
-    min-height: 50px;
-  }
-  
-  h2 {
-    font-size: 1.2rem;
-    margin: -0.5rem 0 1.5rem 0;
-  }
+.button-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.3);
 }
 
-@media (max-width: 480px) {
-  .container {
-    padding: 20px 15px;
-    padding-top: 80px;
-  }
-  
-  .title {
-    font-size: 2rem;
-  }
-  
-  .input-container {
-    max-width: 280px;
-  }
-  
-  .button-primary,
-  .button-secondary {
-    max-width: 280px;
-  }
-}
-
+/* Loading Spinner Enhancement */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Responsive Breakpoints - Comprehensive device coverage */
+
+/* Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 440px;
+  }
+  
+  :root {
+    --button-width-primary: 340px;
+    --button-width-secondary: 320px;
+    --input-width: 380px;
+  }
+}
+
+/* Desktop/Laptop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .container {
+    padding: var(--space-3xl) var(--space-lg);
+  }
+}
+
+/* Tablet Landscape (834px - 1023px) */
+@media (min-width: 834px) and (max-width: 1023px) {
+  .container {
+    padding: var(--space-2xl) var(--space-lg);
+    justify-content: flex-start;
+    padding-top: max(10vh, var(--space-3xl));
+  }
+
+  :root {
+    --container-width: 420px;
+    --button-width-primary: 300px;
+    --button-width-secondary: 280px;
+  }
+}
+
+/* Tablet Portrait (768px - 833px) */
+@media (min-width: 768px) and (max-width: 833px) {
+  .container {
+    padding: var(--space-2xl) var(--space-md);
+    justify-content: flex-start;
+    padding-top: max(8vh, var(--space-2xl));
+  }
+
+  :root {
+    --container-width: 380px;
+    --font-title: clamp(1.6rem, 3.5vw, 2rem);
+  }
+}
+
+/* Large Mobile (414px - 767px) */
+@media (min-width: 414px) and (max-width: 767px) {
+  .container {
+    padding: var(--space-xl) var(--space-md);
+    justify-content: flex-start;
+    padding-top: max(6vh, var(--space-xl));
+  }
+
+  :root {
+    --container-width: 350px;
+    --button-width-primary: 280px;
+    --button-width-secondary: 260px;
+    --input-width: 300px;
+  }
+
+  .input-container {
+    gap: var(--space-md);
+  }
+}
+
+/* Standard Mobile (375px - 413px) - iPhone standard */
+@media (min-width: 375px) and (max-width: 413px) {
+  .container {
+    padding: var(--space-lg) var(--space-sm);
+    padding-top: max(5vh, var(--space-lg));
+  }
+
+  :root {
+    --container-width: 320px;
+    --button-width-primary: 260px;
+    --button-width-secondary: 240px;
+    --input-width: 280px;
+  }
+}
+
+/* Small Mobile (320px - 374px) */
+@media (min-width: 320px) and (max-width: 374px) {
+  .container {
+    padding: var(--space-md) var(--space-sm);
+    padding-top: max(4vh, var(--space-md));
+  }
+
+  :root {
+    --container-width: 300px;
+    --button-width-primary: 240px;
+    --button-width-secondary: 220px;
+    --input-width: 260px;
+    --font-title: clamp(1.4rem, 5vw, 1.75rem);
+    --font-subtitle: clamp(1rem, 3vw, 1.2rem);
+  }
+
+  h2 {
+    margin: calc(-0.5 * var(--space-md)) 0 var(--space-lg) 0;
+  }
+}
+
+/* Ultra-small devices (<320px) */
+@media (max-width: 319px) {
+  .container {
+    padding: var(--space-sm);
+    padding-top: max(3vh, var(--space-sm));
+  }
+
+  :root {
+    --container-width: 280px;
+    --button-width-primary: 220px;
+    --button-width-secondary: 200px;
+    --input-width: 240px;
+    --space-lg: 0.75rem;
+    --space-xl: 1rem;
+    --space-2xl: 1.25rem;
+  }
+}
+
+/* PWA and Mobile Browser Optimizations */
+@supports (height: 100dvh) {
+  .container {
+    min-height: 100dvh;
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  input {
+    font-size: max(16px, var(--font-body)); /* Prevent zoom on iOS */
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .button-primary,
+  .button-secondary {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Landscape phone orientation */
+@media (orientation: landscape) and (max-height: 500px) {
+  .container {
+    justify-content: flex-start;
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-md);
+  }
+
+  .title {
+    margin-bottom: var(--space-lg);
+  }
+
+  h2 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .input-container {
+    margin-bottom: var(--space-lg);
+    gap: var(--space-sm);
+  }
+}
+
+/* Dark mode support (future-proofing) */
+@media (prefers-color-scheme: dark) {
+  /* Colors already optimized for dark mode */
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast accessibility */
+@media (prefers-contrast: high) {
+  :root {
+    --color-input-border: #666;
+    --color-button-secondary-border: #888;
+  }
+
+  input:focus {
+    border-width: 3px;
+  }
+
+  .button-primary:focus-visible,
+  .button-secondary:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
 }
