@@ -2,11 +2,12 @@
    HOME COMPONENT STYLES - RESPONSIVE DESIGN
    =========================================== */
 
-/* Ensure full black background */
+/* Ensure full black background + prevent horizontal scroll */
 html, body {
     background-color: #000000;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
   }
   
   /* Main App Container */
@@ -67,22 +68,24 @@ html, body {
     width: 100%;
   }
   
-  /* New Rep Start Top Bar */
+  /* New Rep Start Top Banner - Full Width */
   .new-rep-bar {
     background-color: #ff0000;
     color: #ffffff;
     padding: 12px 20px;
-    border-radius: 8px;
+    border-radius: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 400px;
+    justify-content: center;
+    width: calc(100vw - 40px);
     cursor: pointer;
     transition: background-color 0.2s ease;
-    margin-bottom: 2rem;
+    margin: -20px -20px 2rem -20px;
     font-weight: 600;
     font-size: 1rem;
+    position: relative;
+    left: 0;
+    right: 0;
   }
   
   .new-rep-bar:active {
@@ -92,13 +95,23 @@ html, body {
   .arrow-right {
     font-size: 1.2rem;
     font-weight: bold;
+    margin-left: auto;
   }
   
   @media (min-width: 768px) {
     .new-rep-bar {
-      max-width: 600px;
+      width: 100vw;
+      margin: -40px -50vw 2rem -50vw;
+      left: 50%;
+      right: 50%;
       padding: 16px 24px;
       font-size: 1.1rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .new-rep-bar {
+      margin: -60px -50vw 3rem -50vw;
     }
   }
   
@@ -347,8 +360,17 @@ html, body {
    SCHEDULE COMPONENT STYLES - ADD TO CONTENT.CSS
    =========================================== */
 
-/* Schedule Grid */
-.schedule-grid {
+/* Prevent horizontal scroll for all components */
+* {
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  /* Schedule Grid */
+  .schedule-grid {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -601,8 +623,17 @@ html, body {
    LICENSING COMPONENT STYLES - ADD TO CONTENT.CSS
    =========================================== */
 
-/* Licensing Tabs */
-.licensing-tabs {
+/* Prevent horizontal scroll for all components */
+* {
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  /* Licensing Tabs */
+  .licensing-tabs {
     display: flex;
     background-color: #1a1a1a;
     border-radius: 10px;
@@ -818,13 +849,21 @@ html, body {
     }
   }
 
-
   /* ===========================================
    TRAINING COMPONENT STYLES - ADD TO CONTENT.CSS
    =========================================== */
 
-/* Training Categories Grid */
-.training-categories {
+/* Prevent horizontal scroll for all components */
+* {
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  /* Training Categories Grid */
+  .training-categories {
     display: flex;
     flex-direction: column;
     gap: 1rem;

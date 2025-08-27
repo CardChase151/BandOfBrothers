@@ -87,12 +87,6 @@ function Home() {
       case 'home':
         return (
           <div className="home-content">
-            {/* New Rep Start Top Bar */}
-            <div className="new-rep-bar" onClick={handleNewRepStart}>
-              <span>New Rep Start</span>
-              <span className="arrow-right">→</span>
-            </div>
-
             {/* Logo and Welcome */}
             <div className="welcome-section">
               <img 
@@ -220,6 +214,12 @@ function Home() {
   return (
     <>
       <div className="app-container">
+        {/* New Rep Start Banner - Full Width at Top */}
+        <div className="new-rep-bar" onClick={handleNewRepStart}>
+          <span>New Rep Start</span>
+          <span className="arrow-right">→</span>
+        </div>
+
         <h1 className="app-title">Team Ins<span className="brand-accent">p</span>ire</h1>
         
         {renderContent()}
