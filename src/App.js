@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { supabase } from './supabaseClient';
 import Login from './onboarding/login';
 import CreateAccount from './onboarding/createAccount';
 import EmailVerify from './onboarding/emailVerify';
@@ -9,10 +10,40 @@ import Home from './main/home';
 import Training from './main/training';
 import Schedule from './main/schedule';
 import Licensing from './main/licensing';
+import ChatDash from './main/chatdash';
+import ChatCreate from './main/chatcreate';
+import ChatMessage from './main/chatmessage';
 import Admin from './admin/admin';
 import Admin2 from './admin/admin2';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // For now, just set loading to false and don't fetch profiles
+    console.log('Setting loading to false immediately');
+    setLoading(false);
+
+    // Listen for auth changes but don't fetch profile yet
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('Auth event:', event, session?.user?.email);
+        if (event === 'SIGNED_IN' && session?.user) {
+          console.log('User signed in, not fetching profile yet');
+        } else if (event === 'SIGNED_OUT') {
+          setUser(null);
+        }
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Router>
       <div className="App">
@@ -29,6 +60,9 @@ function App() {
           <Route path="/training" element={<Training />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/licensing" element={<Licensing />} />
+          <Route path="/chat" element={<ChatDash />} />
+          <Route path="/chat/create" element={<ChatCreate />} />
+          <Route path="/chat/:chatId" element={<ChatMessage />} />
           
           {/* Admin Routes */}
           <Route path="/admin" element={<Admin />} />

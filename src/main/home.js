@@ -7,6 +7,7 @@ import '../onboarding/onboarding.css';
 
 function Home() {
   const [user, setUser] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('home');
   const navigate = useNavigate();
@@ -14,21 +15,43 @@ function Home() {
   useEffect(() => {
     // Check if user is logged in
     const checkUser = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      
-      if (error) {
-        console.error('Error getting session:', error);
-        navigate('/', { replace: true });
-        return;
-      }
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Error getting session:', error);
+          navigate('/', { replace: true });
+          return;
+        }
 
-      if (!session) {
-        navigate('/', { replace: true });
-        return;
-      }
+        if (!session) {
+          console.log('No session found, redirecting to login');
+          navigate('/', { replace: true });
+          return;
+        }
 
-      setUser(session.user);
-      setLoading(false);
+        console.log('Session found:', session.user.email);
+        setUser(session.user);
+
+        // Try to get user profile from users table
+        const { data: profile, error: profileError } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', session.user.id)
+          .single();
+
+        if (profile && !profileError) {
+          console.log('Profile found:', profile);
+          setUserProfile(profile);
+        } else {
+          console.log('No profile found or error:', profileError);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error('Unexpected error in checkUser:', error);
+        navigate('/', { replace: true });
+      }
     };
 
     checkUser();
@@ -89,13 +112,8 @@ function Home() {
           <div className="home-content">
             {/* Logo and Welcome */}
             <div className="welcome-section">
-              <img 
-                src="/assets/logo.jpg" 
-                alt="Team Inspire Logo"
-                className="logo"
-              />
               <h2 className="welcome-title">
-                Welcome, {user?.user_metadata?.first_name || 'User'}!
+                Welcome, {userProfile?.first_name || user?.email?.split('@')[0] || 'User'}!
               </h2>
             </div>
 
@@ -130,69 +148,6 @@ function Home() {
           </div>
         );
       
-      case 'notifications':
-        return (
-          <div className="content-section">
-            <h2>Notifications</h2>
-            <p>No new notifications</p>
-          </div>
-        );
-      
-      case 'schedule':
-        return (
-          <div className="content-section">
-            <h2>Schedule</h2>
-            <p>Your schedule is empty</p>
-          </div>
-        );
-      
-      case 'chat':
-        return (
-          <div className="content-section">
-            <h2>Chat</h2>
-            <p>No active conversations</p>
-          </div>
-        );
-      
-      case 'licensing':
-        return (
-          <div className="content-section">
-            <h2>Licensing</h2>
-            <p>Your licenses and certifications</p>
-          </div>
-        );
-      
-      case 'calculator':
-        return (
-          <div className="content-section">
-            <h2>Calculator</h2>
-            <p>Financial calculator tools</p>
-          </div>
-        );
-      
-      case 'profile':
-        return (
-          <div className="content-section">
-            <h2>Profile</h2>
-            <p>Manage your profile settings</p>
-          </div>
-        );
-
-      case 'admin':
-        return (
-          <div className="content-section">
-            <h2>Admin Panel</h2>
-            <div className="admin-info-card">
-              <p className="admin-label">
-                🔒 Admin Access Only
-              </p>
-              <p className="admin-description">
-                User management, system settings, and administrative tools
-              </p>
-            </div>
-          </div>
-        );
-      
       default:
         return (
           <div className="content-section">
@@ -214,7 +169,7 @@ function Home() {
   return (
     <>
       <div className="app-container">
-        {/* New Rep Start Banner - Full Width at Top */}
+        {/* New Rep Start Banner */}
         <div onClick={handleNewRepStart} style={{
           backgroundColor: '#ff0000',
           color: '#ffffff',
