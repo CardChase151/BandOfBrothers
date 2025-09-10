@@ -80,9 +80,14 @@ function Admin() {
 
   return (
     <div className="admin-container">
-      <h1 className="admin-title">
-        Team Ins<span className="brand-accent">p</span>ire Admin
-      </h1>
+      <div className="admin-header">
+        <h1 className="admin-title">
+          Team Ins<span className="brand-accent">p</span>ire Admin
+        </h1>
+        <button className="admin-back-button" onClick={goBack}>
+          ← Back to App
+        </button>
+      </div>
       
       <div className="admin-welcome">
         <div className="admin-lock-icon">
@@ -133,6 +138,22 @@ function Admin() {
           <div className="admin-menu-content">
             <div className="admin-menu-title">Training Content</div>
             <div className="admin-menu-desc">Manage training videos and materials</div>
+          </div>
+          <div className="admin-menu-arrow">→</div>
+        </button>
+
+        <button 
+          className="admin-menu-button"
+          onClick={() => handleManageContent('newrepstart')}
+        >
+          <div className="admin-menu-icon">
+            <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 2H21l-3 6 3 6h-8.5l-1-2H5a2 2 0 00-2 2zm9-13.5V9" />
+            </svg>
+          </div>
+          <div className="admin-menu-content">
+            <div className="admin-menu-title">New Rep Start</div>
+            <div className="admin-menu-desc">Manage new representative onboarding content</div>
           </div>
           <div className="admin-menu-arrow">→</div>
         </button>
@@ -202,10 +223,6 @@ function Admin() {
           <div className="admin-menu-arrow">→</div>
         </button>
       </div>
-
-      <button className="admin-back-button" onClick={goBack}>
-        ← Back to App
-      </button>
     </div>
   );
 }

@@ -10,6 +10,7 @@ import Home from './main/home';
 import Training from './main/training';
 import Schedule from './main/schedule';
 import Licensing from './main/licensing';
+import NewRepStart from './main/newrepstart';
 import ChatDash from './main/chatdash';
 import ChatCreate from './main/chatcreate';
 import ChatMessage from './main/chatmessage';
@@ -58,6 +59,7 @@ function App() {
           
           {/* Main App Routes */}
           <Route path="/home" element={<Home />} />
+          <Route path="/newrepstart" element={<NewRepStart />} />
           <Route path="/training" element={<Training />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/licensing" element={<Licensing />} />

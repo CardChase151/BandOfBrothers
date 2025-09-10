@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import ImageUpload from './ImageUpload';
 import './admin.css';
 
 function Admin2() {
@@ -362,12 +363,10 @@ function Admin2() {
               </div>
 
               <div className="admin-form-group">
-                <label>Image URL</label>
-                <input
-                  type="url"
-                  value={formData.image_url}
-                  onChange={(e) => setFormData({...formData, image_url: e.target.value})}
-                  placeholder="https://your-supabase-bucket/image.jpg"
+                <label>Image</label>
+                <ImageUpload 
+                  currentImageUrl={formData.image_url}
+                  onImageUploaded={(url) => setFormData({...formData, image_url: url})}
                 />
               </div>
 
@@ -503,6 +502,15 @@ function Admin2() {
           ) : (
             filteredItems.map(item => (
               <div key={item.id} className="admin-content-item">
+                <div className="admin-content-thumbnail">
+                  <img 
+                    src={item.image_url || '/assets/logo.jpg'} 
+                    alt={item.title}
+                    onError={(e) => {
+                      e.target.src = '/assets/logo.jpg';
+                    }}
+                  />
+                </div>
                 <div className="admin-content-info">
                   <h4>{item.title}</h4>
                   <p className="admin-content-desc">{item.description}</p>

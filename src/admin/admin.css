@@ -8,6 +8,57 @@
     box-sizing: border-box;
     color: #ffffff;
   }
+
+  /* Image Upload Styles */
+  .image-upload-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .image-upload-button {
+    background-color: #ff0000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-weight: 500;
+    display: inline-block;
+  }
+
+  .image-upload-button:hover {
+    background-color: #e60000;
+  }
+
+  .image-upload-button:active {
+    background-color: #cc0000;
+  }
+
+  /* Admin Content Item with Thumbnail */
+  .admin-content-item {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .admin-content-thumbnail {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #2a2a2a;
+  }
+
+  .admin-content-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   
   .admin-title {
     font-size: 2.5rem;
