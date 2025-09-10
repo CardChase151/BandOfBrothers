@@ -69,16 +69,6 @@ function Home() {
     return () => subscription.unsubscribe();
   }, [navigate]);
 
-  const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-      navigate('/', { replace: true });
-    } catch (error) {
-      console.error('Error signing out:', error);
-      alert('Error signing out');
-    }
-  };
-
   const handleTabChange = (tab) => {
     setActiveTab(tab);
     
@@ -141,10 +131,6 @@ function Home() {
                 </p>
               </div>
             </div>
-            
-            <button className="logout-button" onClick={handleLogout}>
-              Logout
-            </button>
           </div>
         );
       
@@ -197,7 +183,7 @@ function Home() {
       <BottomNav 
         activeTab={activeTab} 
         onTabChange={handleTabChange}
-        user={user}
+        user={userProfile}
       />
     </>
   );

@@ -28,9 +28,14 @@ function ChatDash() {
   useEffect(() => {
     if (user) {
       loadUserPermissions();
-      loadUserChats();
     }
   }, [user]);
+
+  useEffect(() => {
+    if (user && userPermissions && Object.keys(userPermissions).length > 0) {
+      loadUserChats();
+    }
+  }, [user, userPermissions]);
 
   useEffect(() => {
     applyFilters();
@@ -49,7 +54,13 @@ function ChatDash() {
   };
 
   const loadUserPermissions = async () => {
+    if (!user?.id) {
+      console.log('No user ID available for permissions');
+      return;
+    }
+    
     try {
+      console.log('Loading permissions for user:', user.id);
       const { data: userData, error } = await supabase
         .from('users')
         .select('team_inspire_enabled, can_create_chats, can_send_messages, hidden_chats, archived_chats')
@@ -57,7 +68,8 @@ function ChatDash() {
         .single();
 
       if (error) throw error;
-      setUserPermissions(userData);
+      console.log('Loaded user permissions:', userData);
+      setUserPermissions(userData || {});
     } catch (error) {
       console.error('Error loading user permissions:', error);
       // Default permissions if error
@@ -119,6 +131,16 @@ function ChatDash() {
         .eq('chat_participants.user_id', user.id)
         .eq('chat_participants.is_active', true)
         .eq('is_active', true);
+
+      // Exclude Team Inspire chat if user doesn't have access
+      console.log('User permissions:', userPermissions);
+      console.log('Team Inspire enabled:', userPermissions.team_inspire_enabled);
+      if (!userPermissions.team_inspire_enabled) {
+        console.log('Filtering out Team Inspire chat');
+        chatsQuery = chatsQuery.neq('type', 'mandatory');
+      } else {
+        console.log('Keeping Team Inspire chat');
+      }
 
       // Only filter hidden chats if there are any
       if (hiddenChats.length > 0) {

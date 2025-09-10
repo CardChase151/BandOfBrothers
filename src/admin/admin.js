@@ -23,8 +23,14 @@ function Admin() {
       return;
     }
 
-    // Check if user is admin
-    if (!session.user.user_metadata?.IsAdmin) {
+    // Get user profile from users table to check admin role
+    const { data: profile, error: profileError } = await supabase
+      .from('users')
+      .select('role')
+      .eq('id', session.user.id)
+      .single();
+
+    if (profileError || !profile || profile.role !== 'admin') {
       navigate('/home', { replace: true });
       return;
     }
@@ -174,7 +180,7 @@ function Admin() {
           </div>
           <div className="admin-menu-content">
             <div className="admin-menu-title">Chat Management</div>
-            <div className="admin-menu-desc">Manage chat resources and templates</div>
+            <div className="admin-menu-desc">Manage user chat permissions</div>
           </div>
           <div className="admin-menu-arrow">→</div>
         </button>

@@ -12,6 +12,7 @@ function Admin2() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -57,14 +58,30 @@ function Admin2() {
 
   useEffect(() => {
     checkUser();
-    loadContent();
-    setCategories(getCategoriesForType(contentType));
+    if (contentType === 'chat') {
+      loadUsers();
+    } else {
+      loadContent();
+      setCategories(getCategoriesForType(contentType));
+    }
   }, [contentType]);
 
   const checkUser = async () => {
     const { data: { session }, error } = await supabase.auth.getSession();
     
-    if (error || !session || !session.user.user_metadata?.IsAdmin) {
+    if (error || !session) {
+      navigate('/home', { replace: true });
+      return;
+    }
+
+    // Get user profile from users table to check admin role
+    const { data: profile, error: profileError } = await supabase
+      .from('users')
+      .select('role')
+      .eq('id', session.user.id)
+      .single();
+
+    if (profileError || !profile || profile.role !== 'admin') {
       navigate('/home', { replace: true });
       return;
     }
@@ -86,6 +103,43 @@ function Admin2() {
     } catch (error) {
       console.error('Error loading content:', error);
       alert('Error loading content: ' + error.message);
+    }
+  };
+
+  const loadUsers = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .select('id, first_name, last_name, email, can_create_chats, can_send_messages, team_inspire_enabled')
+        .order('first_name', { ascending: true });
+
+      if (error) throw error;
+      setUsers(data || []);
+    } catch (error) {
+      console.error('Error loading users:', error);
+      alert('Error loading users: ' + error.message);
+    }
+  };
+
+  const toggleUserPermission = async (userId, field) => {
+    try {
+      const currentUser = users.find(u => u.id === userId);
+      const newValue = !currentUser[field];
+
+      const { error } = await supabase
+        .from('users')
+        .update({ [field]: newValue })
+        .eq('id', userId);
+
+      if (error) throw error;
+
+      // Update local state
+      setUsers(users.map(u => 
+        u.id === userId ? { ...u, [field]: newValue } : u
+      ));
+    } catch (error) {
+      console.error('Error updating user permission:', error);
+      alert('Error updating permission: ' + error.message);
     }
   };
 
@@ -138,7 +192,6 @@ function Admin2() {
       // Reset form and reload content
       resetForm();
       loadContent();
-      alert(editingItem ? 'Content updated successfully!' : 'Content added successfully!');
     } catch (error) {
       console.error('Error saving content:', error);
       alert('Error saving content: ' + error.message);
@@ -176,7 +229,6 @@ function Admin2() {
       if (error) throw error;
       
       loadContent();
-      alert('Content deleted successfully!');
     } catch (error) {
       console.error('Error deleting content:', error);
       alert('Error deleting content: ' + error.message);
@@ -203,6 +255,9 @@ function Admin2() {
   };
 
   const getContentTypeTitle = () => {
+    if (contentType === 'chat') {
+      return 'Chat Permissions';
+    }
     return contentType.charAt(0).toUpperCase() + contentType.slice(1) + ' Content';
   };
 
@@ -243,31 +298,33 @@ function Admin2() {
         </button>
       </div>
 
-      {/* Category Filter */}
-      <div className="admin-filters">
-        <label>Filter by Category:</label>
-        <select 
-          value={selectedCategory} 
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="admin-select"
-        >
-          <option value="all">All Categories</option>
-          {categories.map(cat => (
-            <option key={cat} value={cat}>{cat}</option>
-          ))}
-        </select>
-        
-        <button 
-          className="button-primary"
-          onClick={() => setShowAddForm(true)}
-          style={{ marginLeft: '1rem' }}
-        >
-          + Add New Content
-        </button>
-      </div>
+      {/* Category Filter - only show for non-chat content */}
+      {contentType !== 'chat' && (
+        <div className="admin-filters">
+          <label>Filter by Category:</label>
+          <select 
+            value={selectedCategory} 
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="admin-select"
+          >
+            <option value="all">All Categories</option>
+            {categories.map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
+          
+          <button 
+            className="button-primary"
+            onClick={() => setShowAddForm(true)}
+            style={{ marginLeft: '1rem' }}
+          >
+            + Add New Content
+          </button>
+        </div>
+      )}
 
-      {/* Add/Edit Form */}
-      {showAddForm && (
+      {/* Add/Edit Form - only show for non-chat content */}
+      {showAddForm && contentType !== 'chat' && (
         <div className="admin-form-overlay">
           <div className="admin-form-modal">
             <h3>{editingItem ? 'Edit Content' : 'Add New Content'}</h3>
@@ -384,61 +441,109 @@ function Admin2() {
         </div>
       )}
 
-      {/* Content List */}
-      <div className="admin-content-list">
-        {filteredItems.length === 0 ? (
-          <div className="admin-empty-state">
-            <p>No content found for this category.</p>
-            <button 
-              className="button-primary"
-              onClick={() => setShowAddForm(true)}
-            >
-              Add First Item
-            </button>
-          </div>
-        ) : (
-          filteredItems.map(item => (
-            <div key={item.id} className="admin-content-item">
-              <div className="admin-content-info">
-                <h4>{item.title}</h4>
-                <p className="admin-content-desc">{item.description}</p>
-                <div className="admin-content-meta">
-                  <span className="admin-content-category">{item.category}</span>
-                  <span className="admin-content-order">Order: {item.sort_order}</span>
-                  {contentType === 'schedule' && item.start_time && item.end_time && (
-                    <span className="admin-content-time">
-                      {formatTime(item.start_time)} - {formatTime(item.end_time)}
-                    </span>
-                  )}
-                  {item.url && (
-                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="admin-content-link">
-                      View Link
-                    </a>
-                  )}
+      {/* Content List or User Permissions */}
+      {contentType === 'chat' ? (
+        <div className="admin-content-list">
+          <h3 style={{ marginBottom: '1rem' }}>User Chat Permissions</h3>
+          {users.length === 0 ? (
+            <div className="admin-empty-state">
+              <p>No users found.</p>
+            </div>
+          ) : (
+            users.map(user => (
+              <div key={user.id} className="admin-content-item">
+                <div className="admin-content-info">
+                  <h4>{user.first_name} {user.last_name}</h4>
+                  <p className="admin-content-desc">{user.email}</p>
+                  <div className="admin-content-meta">
+                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="checkbox"
+                          checked={user.team_inspire_enabled}
+                          onChange={() => toggleUserPermission(user.id, 'team_inspire_enabled')}
+                        />
+                        Team Inspire Chat
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="checkbox"
+                          checked={user.can_create_chats}
+                          onChange={() => toggleUserPermission(user.id, 'can_create_chats')}
+                        />
+                        Can Create Chats
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <input
+                          type="checkbox"
+                          checked={user.can_send_messages}
+                          onChange={() => toggleUserPermission(user.id, 'can_send_messages')}
+                        />
+                        Can Send Messages
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="admin-content-actions">
-                <button 
-                  onClick={() => handleEdit(item)}
-                  className="admin-action-button edit"
-                >
-                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                  </svg>
-                </button>
-                <button 
-                  onClick={() => handleDelete(item)}
-                  className="admin-action-button delete"
-                >
-                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                  </svg>
-                </button>
-              </div>
+            ))
+          )}
+        </div>
+      ) : (
+        <div className="admin-content-list">
+          {filteredItems.length === 0 ? (
+            <div className="admin-empty-state">
+              <p>No content found for this category.</p>
+              <button 
+                className="button-primary"
+                onClick={() => setShowAddForm(true)}
+              >
+                Add First Item
+              </button>
             </div>
-          ))
-        )}
-      </div>
+          ) : (
+            filteredItems.map(item => (
+              <div key={item.id} className="admin-content-item">
+                <div className="admin-content-info">
+                  <h4>{item.title}</h4>
+                  <p className="admin-content-desc">{item.description}</p>
+                  <div className="admin-content-meta">
+                    <span className="admin-content-category">{item.category}</span>
+                    <span className="admin-content-order">Order: {item.sort_order}</span>
+                    {contentType === 'schedule' && item.start_time && item.end_time && (
+                      <span className="admin-content-time">
+                        {formatTime(item.start_time)} - {formatTime(item.end_time)}
+                      </span>
+                    )}
+                    {item.url && (
+                      <a href={item.url} target="_blank" rel="noopener noreferrer" className="admin-content-link">
+                        View Link
+                      </a>
+                    )}
+                  </div>
+                </div>
+                <div className="admin-content-actions">
+                  <button 
+                    onClick={() => handleEdit(item)}
+                    className="admin-action-button edit"
+                  >
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(item)}
+                    className="admin-action-button delete"
+                  >
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }

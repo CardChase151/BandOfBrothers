@@ -15,6 +15,7 @@ import ChatCreate from './main/chatcreate';
 import ChatMessage from './main/chatmessage';
 import Admin from './admin/admin';
 import Admin2 from './admin/admin2';
+import Profile from './main/profile';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -63,6 +64,7 @@ function App() {
           <Route path="/chat" element={<ChatDash />} />
           <Route path="/chat/create" element={<ChatCreate />} />
           <Route path="/chat/:chatId" element={<ChatMessage />} />
+          <Route path="/profile" element={<Profile />} />
           
           {/* Admin Routes */}
           <Route path="/admin" element={<Admin />} />

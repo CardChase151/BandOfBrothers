@@ -7,7 +7,7 @@ function BottomNav({ activeTab, onTabChange, user }) {
   const navigate = useNavigate();
 
   // Check if user is admin
-  const isAdmin = user?.user_metadata?.IsAdmin === true;
+  const isAdmin = user?.role === 'admin';
 
   const handleNavClick = (tab) => {
     // Handle special navigation cases
@@ -37,6 +37,12 @@ function BottomNav({ activeTab, onTabChange, user }) {
 
     if (tab === 'chat') {
       navigate('/chat');
+      setShowMoreNav(false);
+      return;
+    }
+
+    if (tab === 'profile') {
+      navigate('/profile');
       setShowMoreNav(false);
       return;
     }
@@ -136,7 +142,16 @@ function BottomNav({ activeTab, onTabChange, user }) {
             className={`nav-button ${activeTab === 'calculator' ? 'active' : ''}`}
           >
             <svg className="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 002 2z" />
+              <rect x="4" y="2" width="16" height="20" rx="2" strokeWidth={1.5}></rect>
+              <rect x="6" y="4" width="12" height="3" rx="1" strokeWidth={1}></rect>
+              <rect x="6" y="9" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
+              <rect x="10.75" y="9" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
+              <rect x="15.5" y="9" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
+              <rect x="6" y="13" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
+              <rect x="10.75" y="13" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
+              <rect x="15.5" y="13" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
+              <rect x="6" y="17" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
+              <rect x="10.75" y="17" width="6.75" height="2.5" rx="0.3" strokeWidth={1}></rect>
             </svg>
             <span className="nav-label">Calculator</span>
           </button>
