@@ -92,12 +92,87 @@ function Schedule() {
   }
 
   return (
-    <div className="app-container">
-      <button className="back-button" onClick={handleBackToHome}>
+    <div style={{
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      right: '0',
+      bottom: '0',
+      overflow: 'hidden',
+      touchAction: 'none'
+    }}>
+      {/* Dynamic Bar Background - Black */}
+      <div style={{
+        backgroundColor: '#000000',
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        right: '0',
+        height: '60px',
+        zIndex: '999'
+      }}></div>
+
+      {/* Back Button - Fixed Position */}
+      <button
+        onClick={handleBackToHome}
+        style={{
+          position: 'fixed',
+          top: '70px',
+          left: '20px',
+          zIndex: '1000',
+          width: '36px',
+          height: '36px',
+          fontSize: '1.5rem',
+          boxShadow: '0 2px 8px rgba(255, 0, 0, 0.2)',
+          borderRadius: '50%',
+          backgroundColor: '#ff0000',
+          color: '#ffffff',
+          border: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0',
+          cursor: 'pointer',
+          fontWeight: 'bold'
+        }}
+      >
         ←
       </button>
-      
-      <h1 className="app-title">Schedule</h1>
+
+      {/* Title - Fixed Position */}
+      <div style={{
+        position: 'fixed',
+        top: '70px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: '1000'
+      }}>
+        <h1 className="app-title" style={{margin: '0', fontSize: '2rem'}}>Schedule</h1>
+      </div>
+
+      {/* Scrollable Content Container */}
+      <div style={{
+        position: 'fixed',
+        top: '120px',
+        left: '0',
+        right: '0',
+        bottom: '20px',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        touchAction: 'pan-y',
+        WebkitOverflowScrolling: 'touch'
+      }}>
+        <div className="app-container" style={{
+          marginTop: '0',
+          minHeight: '100%',
+          paddingBottom: '20px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
+          width: '100%',
+          maxWidth: '100vw',
+          overflowX: 'hidden',
+          boxSizing: 'border-box'
+        }}>
 
       <div className="content-section">
         <p>Weekly meetings and training sessions</p>
@@ -117,9 +192,19 @@ function Schedule() {
           <p>There are no scheduled events at this time. Check back later for updates.</p>
         </div>
       ) : (
-        <div className="schedule-grid">
+        <div className="schedule-grid" style={{
+          width: '100%',
+          maxWidth: '100%',
+          overflowX: 'hidden',
+          boxSizing: 'border-box'
+        }}>
           {scheduleItems.map((item) => (
-            <div key={item.id} className="schedule-card">
+            <div key={item.id} className="schedule-card" style={{
+              maxWidth: '100%',
+              width: '100%',
+              minWidth: '0',
+              overflowX: 'hidden'
+            }}>
               <div className="schedule-icon">
                 <img src="/assets/logo.jpg" alt="Team Inspire" />
               </div>
@@ -184,6 +269,8 @@ function Schedule() {
           ))}
         </div>
       )}
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "Team Inspire",
+    "slug": "team-inspire",
+    "version": "1.0.0",
+    "platforms": ["ios"],
+    "ios": {
+      "bundleIdentifier": "com.ac.teamInspire"
+    },
+    "web": {
+      "build": {
+        "babel": {
+          "include": ["@expo/web-config"]
+        }
+      }
+    }
+  }
+}

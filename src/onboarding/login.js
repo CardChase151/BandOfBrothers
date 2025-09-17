@@ -39,20 +39,20 @@ function Login() {
           .select('*')
           .eq('id', data.user.id)
           .single();
-        
+
         // If no profile exists, create one from auth metadata
         if (profileError && profileError.code === 'PGRST116') {
           console.log('Creating user profile from metadata...');
           console.log('Auth user data:', data.user);
-          
+
           const metadata = data.user.user_metadata || {};
           console.log('Metadata:', metadata);
-          
+
           const firstName = metadata.first_name || '';
           const lastName = metadata.last_name || '';
-          
+
           console.log('Extracted names:', { firstName, lastName });
-          
+
           const { error: insertError } = await supabase
             .from('users')
             .insert([{
@@ -62,7 +62,7 @@ function Login() {
               last_name: lastName,
               role: 'user'
             }]);
-          
+
           if (insertError) {
             console.error('Error creating user profile:', insertError);
             // Don't fail login - they can still use the app
@@ -76,12 +76,12 @@ function Login() {
 
       const elapsed = Date.now() - startTime;
       const remainingTime = Math.max(0, 3000 - elapsed);
-      
+
       await new Promise(resolve => setTimeout(resolve, remainingTime));
 
       console.log('Login successful:', data);
       navigate('/home');
-      
+
     } catch (error) {
       console.error('Unexpected error:', error);
       alert('An unexpected error occurred');
@@ -100,25 +100,33 @@ function Login() {
   return (
     <div className="login-container">
       <h1 className="login-title">Team Ins<span className="login-accent">p</span>ire</h1>
-      
+
       <div className="login-input-container">
-        <input 
+        <input
           className="login-input"
-          type="email" 
+          type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
+          autoCapitalize="none"
+          spellCheck="false"
+          inputMode="email"
+          enterKeyHint="next"
         />
-        
+
         <div className="login-password-wrapper">
-          <input 
+          <input
             className="login-input login-password-input"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+            spellCheck="false"
+            enterKeyHint="done"
           />
-          <button 
+          <button
             type="button"
             className="login-toggle-button"
             onClick={() => setShowPassword(!showPassword)}
@@ -127,9 +135,9 @@ function Login() {
           </button>
         </div>
       </div>
-      
-      <button 
-        className="login-primary-button" 
+
+      <button
+        className="login-primary-button"
         onClick={handleLogin}
         disabled={isLoggingIn}
       >
@@ -142,17 +150,17 @@ function Login() {
           'Login'
         )}
       </button>
-      
-      <button 
-        className="login-secondary-button" 
+
+      <button
+        className="login-secondary-button"
         onClick={goToCreateAccount}
         disabled={isLoggingIn}
       >
         Create Account
       </button>
-      
-      <button 
-        className="login-link-button" 
+
+      <button
+        className="login-link-button"
         onClick={goToForgotPassword}
         disabled={isLoggingIn}
       >

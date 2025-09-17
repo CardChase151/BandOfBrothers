@@ -287,17 +287,89 @@ function Admin2() {
   }
 
   return (
-    <div className="admin-container">
-      <h1 className="admin-title">
-        Team Ins<span className="brand-accent">p</span>ire Admin
-      </h1>
-      
-      <div className="admin-header">
-        <h2>Manage {getContentTypeTitle()}</h2>
-        <button className="admin-back-button" onClick={goBack}>
-          ← Back to Admin
-        </button>
+    <div style={{
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      right: '0',
+      bottom: '0',
+      overflow: 'hidden',
+      touchAction: 'none'
+    }}>
+      {/* Dynamic Bar Background - Black */}
+      <div style={{
+        backgroundColor: '#000000',
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        right: '0',
+        height: '60px',
+        zIndex: '999'
+      }}></div>
+
+      {/* Back Button - Fixed Position */}
+      <button
+        onClick={goBack}
+        style={{
+          position: 'fixed',
+          top: '70px',
+          left: '20px',
+          zIndex: '1000',
+          width: '36px',
+          height: '36px',
+          fontSize: '1.5rem',
+          boxShadow: '0 2px 8px rgba(255, 0, 0, 0.2)',
+          borderRadius: '50%',
+          backgroundColor: '#ff0000',
+          color: '#ffffff',
+          border: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0',
+          cursor: 'pointer',
+          fontWeight: 'bold'
+        }}
+      >
+        ←
+      </button>
+
+      {/* Title - Fixed Position */}
+      <div style={{
+        position: 'fixed',
+        top: '70px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: '1000',
+        textAlign: 'center'
+      }}>
+        <div style={{margin: '0', fontSize: '1.6rem', color: '#ffffff', lineHeight: '1.2'}}>Manage</div>
+        <div style={{margin: '0', fontSize: '1.4rem', color: '#ffffff', lineHeight: '1.2'}}>{getContentTypeTitle()}</div>
       </div>
+
+      {/* Scrollable Content Container */}
+      <div style={{
+        position: 'fixed',
+        top: '120px',
+        left: '0',
+        right: '0',
+        bottom: '20px',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        touchAction: 'pan-y',
+        WebkitOverflowScrolling: 'touch'
+      }}>
+        <div className="admin-container" style={{
+          marginTop: '0',
+          minHeight: '100%',
+          paddingBottom: '20px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
+          width: '100%',
+          maxWidth: '100vw',
+          overflowX: 'hidden',
+          boxSizing: 'border-box'
+        }}>
 
       {/* Category Filter - only show for non-chat content */}
       {contentType !== 'chat' && (
@@ -552,6 +624,8 @@ function Admin2() {
           )}
         </div>
       )}
+        </div>
+      </div>
     </div>
   );
 }

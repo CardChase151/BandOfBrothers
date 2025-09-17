@@ -341,17 +341,90 @@ function ChatCreate() {
   }
 
   return (
-    <div className="chat-create-container">
-      {/* Header */}
-      <div className="chat-create-header">
-        <button className="back-button-create" onClick={handleBackToChat}>
-          ←
-        </button>
-        <div className="header-content">
-          <h1 className="create-title">New Chat</h1>
-          <p className="create-subtitle">{getChatTypeText()}</p>
-        </div>
+    <div style={{
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      right: '0',
+      bottom: '0',
+      overflow: 'hidden'
+    }}>
+      {/* Dynamic Bar Background - Black */}
+      <div style={{
+        backgroundColor: '#000000',
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        right: '0',
+        height: '60px',
+        zIndex: '999'
+      }}></div>
+
+      {/* Back Button - Fixed Position */}
+      <button
+        onClick={handleBackToChat}
+        style={{
+          position: 'fixed',
+          top: '70px',
+          left: '20px',
+          zIndex: '1000',
+          width: '36px',
+          height: '36px',
+          fontSize: '1.5rem',
+          boxShadow: '0 2px 8px rgba(255, 0, 0, 0.2)',
+          borderRadius: '50%',
+          backgroundColor: '#ff0000',
+          color: '#ffffff',
+          border: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0',
+          cursor: 'pointer',
+          fontWeight: 'bold'
+        }}
+      >
+        ←
+      </button>
+
+      {/* Title - Fixed Position */}
+      <div style={{
+        position: 'fixed',
+        top: '70px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: '1000'
+      }}>
+        <h1 className="app-title" style={{margin: '0', fontSize: '2rem', whiteSpace: 'nowrap'}}>New Chat</h1>
       </div>
+
+      {/* Scrollable Content Container */}
+      <div style={{
+        position: 'fixed',
+        top: '120px',
+        left: '0',
+        right: '0',
+        bottom: '100px',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        touchAction: 'pan-y',
+        WebkitOverflowScrolling: 'touch'
+      }}>
+        <div className="app-container" style={{
+          marginTop: '0',
+          minHeight: '100%',
+          paddingBottom: '20px',
+          paddingLeft: '20px',
+          paddingRight: '25px',
+          width: '100%',
+          maxWidth: '100vw',
+          overflowX: 'hidden',
+          boxSizing: 'border-box'
+        }}>
+
+          <div className="content-section">
+            <p>{getChatTypeText()}</p>
+          </div>
 
       {/* Selected Users Preview */}
       {selectedUsers.length > 0 && (
@@ -511,6 +584,8 @@ function ChatCreate() {
           </div>
         </div>
       )}
+        </div>
+      </div>
     </div>
   );
 }

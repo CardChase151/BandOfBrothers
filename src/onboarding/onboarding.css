@@ -794,26 +794,27 @@
      ============================================ */
   
   .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 40px 20px;
-    background-color: #000000;
-    box-sizing: border-box;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
+    padding: 40px 20px 60px 20px !important;
+    background-color: #000000 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
   }
   
   .login-title {
-    font-size: 2.8rem;
-    color: #ffffff;
-    margin-bottom: 3rem;
-    text-align: center;
-    font-weight: 600;
+    font-size: 2.8rem !important;
+    color: #ffffff !important;
+    margin-bottom: 3rem !important;
+    text-align: center !important;
+    font-weight: 600 !important;
   }
   
   .login-accent {
-    color: #ff0000;
+    color: #ff0000 !important;
   }
   
   .login-input-container {
@@ -971,29 +972,30 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: 20px 20px 120px 20px;
     background-color: #000000;
     box-sizing: border-box;
   }
   
   .create-title {
-    font-size: 2.8rem;
-    color: #ffffff;
-    margin-bottom: 3rem;
-    text-align: center;
-    font-weight: 600;
+    font-size: 2.8rem !important;
+    color: #ffffff !important;
+    margin-bottom: 1rem !important;
+    text-align: center !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
   }
   
   .create-accent {
-    color: #ff0000;
+    color: #ff0000 !important;
   }
   
   .create-subtitle {
-    color: #ffffff;
-    font-size: 1.4rem;
-    margin: -1rem 0 2rem 0;
-    text-align: center;
-    font-weight: 400;
+    color: #ffffff !important;
+    font-size: 1.4rem !important;
+    margin: 0 0 3rem 0 !important;
+    text-align: center !important;
+    font-weight: 400 !important;
   }
   
   .create-input-container {
@@ -1132,8 +1134,7 @@
   @media (max-width: 768px) {
     .login-container {
       padding: 30px 20px;
-      justify-content: flex-start;
-      padding-top: 100px;
+      justify-content: center;
     }
     
     .login-title {
@@ -1157,7 +1158,7 @@
     
     .login-input {
       padding: 14px 16px;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
     
     .login-password-input {
@@ -1181,7 +1182,7 @@
   @media (max-width: 480px) {
     .login-container {
       padding: 20px 15px;
-      padding-top: 80px;
+      justify-content: center;
     }
     
     .login-title {
@@ -1207,9 +1208,8 @@
   
   @media (max-width: 768px) {
     .create-container {
-      padding: 30px 20px;
-      justify-content: flex-start;
-      padding-top: 100px;
+      padding: 20px 20px 120px 20px;
+      justify-content: center;
     }
     
     .create-title {

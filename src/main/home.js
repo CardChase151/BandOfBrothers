@@ -154,34 +154,61 @@ function Home() {
 
   return (
     <>
-      <div className="app-container">
-        {/* New Rep Start Banner */}
-        <div onClick={handleNewRepStart} style={{
-          backgroundColor: '#ff0000',
-          color: '#ffffff',
-          padding: '16px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          width: '100%',
-          marginBottom: '2rem',
-          fontWeight: '600',
-          fontSize: '1rem',
-          cursor: 'pointer',
-          borderRadius: '8px'
-        }}>
-          <span>New Rep Start</span>
-          <span>→</span>
-        </div>
+      {/* Dynamic Bar Background - Black */}
+      <div style={{
+        backgroundColor: '#000000',
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        right: '0',
+        height: '60px',
+        zIndex: '999'
+      }}></div>
 
-        <h1 className="app-title">Team Ins<span className="brand-accent">p</span>ire</h1>
-        
-        {renderContent()}
+      {/* New Rep Start Banner - Below dynamic bar */}
+      <div onClick={handleNewRepStart} style={{
+        backgroundColor: '#ff0000',
+        color: '#ffffff',
+        padding: '16px 20px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '95%',
+        margin: '0 auto 0 auto',
+        fontWeight: '600',
+        fontSize: '1rem',
+        cursor: 'pointer',
+        borderRadius: '8px',
+        position: 'fixed',
+        top: '60px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: '1000'
+      }}>
+        <span>New Rep Start</span>
+        <span>→</span>
       </div>
 
-      {/* Bottom Navigation */}
-      <BottomNav 
-        activeTab={activeTab} 
+      {/* Home Content Container - Scrollable content area */}
+      <div style={{
+        position: 'fixed',
+        top: '120px',
+        left: '0',
+        right: '0',
+        bottom: '100px',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        touchAction: 'pan-y'
+      }}>
+        <div className="app-container" style={{marginTop: '0', minHeight: '100%', paddingBottom: '20px'}}>
+          <h1 className="app-title">Team Ins<span className="brand-accent">p</span>ire</h1>
+          {renderContent()}
+        </div>
+      </div>
+
+      {/* Bottom Navigation - Independent */}
+      <BottomNav
+        activeTab={activeTab}
         onTabChange={handleTabChange}
         user={userProfile}
       />

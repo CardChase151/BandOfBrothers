@@ -10,7 +10,6 @@ function ChatDash() {
   const [filteredChats, setFilteredChats] = useState([]);
   const [userMetadataCache, setUserMetadataCache] = useState({});
   const [isLoadingChats, setIsLoadingChats] = useState(false);
-  const [showNewChatMenu, setShowNewChatMenu] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchMode, setSearchMode] = useState('Users');
@@ -358,12 +357,11 @@ function ChatDash() {
     navigate(`/chat/${chat.id}`);
   };
 
-  const handleNewChatOption = () => {
+  const handleNewChat = () => {
     if (!userPermissions.can_create_chats) {
       alert('You do not have permission to create chats.');
       return;
     }
-    setShowNewChatMenu(false);
     navigate('/chat/create');
   };
 
@@ -465,45 +463,134 @@ function ChatDash() {
   }
 
   return (
-    <div className="app-container">
-      {/* Fixed Header */}
-      <div className="chat-dash-header">
-        <button className="back-button" onClick={handleBackToHome}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.42-1.41L7.83 13H20v-2z"/>
-          </svg>
-        </button>
-        
-        <h1 className="dash-title">Chats</h1>
-        
-        <div className="header-actions">
-          <button className="search-toggle-button" onClick={toggleSearch}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
-          </button>
-          
-          {userPermissions.can_create_chats && (
-            <button className="new-chat-button" onClick={() => setShowNewChatMenu(!showNewChatMenu)}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-              </svg>
-            </button>
-          )}
-        </div>
+    <div style={{
+      position: 'fixed',
+      top: '0',
+      left: '0',
+      right: '0',
+      bottom: '0',
+      overflow: 'hidden'
+    }}>
+      {/* Dynamic Bar Background - Black */}
+      <div style={{
+        backgroundColor: '#000000',
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        right: '0',
+        height: '60px',
+        zIndex: '999'
+      }}></div>
+
+      {/* Back Button - Fixed Position */}
+      <button
+        onClick={handleBackToHome}
+        style={{
+          position: 'fixed',
+          top: '70px',
+          left: '20px',
+          zIndex: '1000',
+          width: '36px',
+          height: '36px',
+          fontSize: '1.5rem',
+          boxShadow: '0 2px 8px rgba(255, 0, 0, 0.2)',
+          borderRadius: '50%',
+          backgroundColor: '#ff0000',
+          color: '#ffffff',
+          border: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0',
+          cursor: 'pointer',
+          fontWeight: 'bold'
+        }}
+      >
+        ←
+      </button>
+
+      {/* Title - Fixed Position */}
+      <div style={{
+        position: 'fixed',
+        top: '70px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: '1000'
+      }}>
+        <h1 className="app-title" style={{margin: '0', fontSize: '2rem', whiteSpace: 'nowrap'}}>Chats</h1>
       </div>
 
-      {/* New Chat Menu */}
-      {showNewChatMenu && userPermissions.can_create_chats && (
-        <div className="new-chat-menu">
-          <button className="menu-option" onClick={handleNewChatOption}>
+      {/* Header Actions - Fixed Position */}
+      <div style={{
+        position: 'fixed',
+        top: '70px',
+        right: '20px',
+        zIndex: '1000',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px'
+      }}>
+        <button onClick={toggleSearch} style={{
+          width: '36px',
+          height: '36px',
+          borderRadius: '50%',
+          backgroundColor: '#2d2d2d',
+          color: '#ffffff',
+          border: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer'
+        }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+        </button>
+
+        {userPermissions.can_create_chats && (
+          <button onClick={handleNewChat} style={{
+            width: '36px',
+            height: '36px',
+            borderRadius: '50%',
+            backgroundColor: '#2d2d2d',
+            color: '#ffffff',
+            border: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer'
+          }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
             </svg>
-            New Chat
           </button>
-        </div>
-      )}
+        )}
+      </div>
+
+      {/* Scrollable Content Container */}
+      <div style={{
+        position: 'fixed',
+        top: '120px',
+        left: '0',
+        right: '0',
+        bottom: '100px',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        touchAction: 'pan-y',
+        WebkitOverflowScrolling: 'touch'
+      }}>
+        <div className="app-container" style={{
+          marginTop: '0',
+          minHeight: '100%',
+          paddingBottom: '20px',
+          paddingLeft: '20px',
+          paddingRight: '25px',
+          width: '100%',
+          maxWidth: '100vw',
+          overflowX: 'hidden',
+          boxSizing: 'border-box'
+        }}>
+
 
       {/* Search Section */}
       {showSearch && (
@@ -587,7 +674,7 @@ function ChatDash() {
             </p>
           </div>
         ) : (
-          <div className="chat-list" onClick={() => setShowNewChatMenu(false)}>
+          <div className="chat-list">
             {filteredChats.map((chat) => (
               <div
                 key={chat.id}
@@ -643,6 +730,8 @@ function ChatDash() {
             ))}
           </div>
         )}
+      </div>
+        </div>
       </div>
     </div>
   );

@@ -68,39 +68,53 @@ function CreateAccount() {
 
   return (
     <div className="create-container">
-      <h1 className="create-title">Team Ins<span className="create-accent">p</span>ire</h1>
-      <h2 className="create-subtitle">Create Account</h2>
+      <h1 className="create-title">Create Account</h1>
+      <h2 className="create-subtitle">Team Ins<span className="create-accent">p</span>ire</h2>
       
       <div className="create-input-container">
-        <input 
+        <input
           className="create-input"
-          type="text" 
+          type="text"
           placeholder="First Name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
+          autoComplete="given-name"
+          spellCheck="false"
+          enterKeyHint="next"
         />
-        <input 
+        <input
           className="create-input"
-          type="text" 
+          type="text"
           placeholder="Last Name"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          autoComplete="family-name"
+          spellCheck="false"
+          enterKeyHint="next"
         />
-        <input 
+        <input
           className="create-input"
-          type="email" 
+          type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
+          autoCapitalize="none"
+          spellCheck="false"
+          inputMode="email"
+          enterKeyHint="next"
         />
         
         <div className="create-password-wrapper">
-          <input 
+          <input
             className="create-input create-password-input"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
+            spellCheck="false"
+            enterKeyHint="next"
           />
           <button 
             type="button"
@@ -112,12 +126,15 @@ function CreateAccount() {
         </div>
         
         <div className="create-password-wrapper">
-          <input 
+          <input
             className="create-input create-password-input"
             type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            autoComplete="new-password"
+            spellCheck="false"
+            enterKeyHint="done"
           />
           <button 
             type="button"
@@ -140,7 +157,7 @@ function CreateAccount() {
             We're sending you an email...
           </div>
         ) : (
-          'Create Account'
+          'Verify Account'
         )}
       </button>
       

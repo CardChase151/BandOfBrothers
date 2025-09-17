@@ -48,7 +48,7 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="App" style={{ overflow: 'hidden', height: '100vh', width: '100vw' }}>
         <Routes>
           {/* Authentication Routes */}
           <Route path="/" element={<Login />} />
