@@ -165,12 +165,6 @@ function NewRepStart() {
               </svg>
               <h3>No Content Available</h3>
               <p>There are no new rep start materials available yet.</p>
-              <button
-                className="button-primary"
-                onClick={handleBackToHome}
-              >
-                Back to Home
-              </button>
             </div>
           ) : (
             <div className="training-content-grid">

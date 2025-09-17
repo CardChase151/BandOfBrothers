@@ -1,13 +1,107 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '../supabaseClient';
 import './bottomnav.css';
 
 function BottomNav({ activeTab, onTabChange, user }) {
   const [showMoreNav, setShowMoreNav] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
 
   // Check if user is admin
   const isAdmin = user?.role === 'admin';
+
+  useEffect(() => {
+    if (user?.id) {
+      loadUnreadCount();
+    }
+  }, [user]);
+
+  const loadUnreadCount = async () => {
+    if (!user?.id) return;
+
+    try {
+      // Get current user session
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !session) return;
+
+      const currentUser = session.user;
+
+      // Get user permissions
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('team_inspire_enabled, hidden_chats')
+        .eq('id', currentUser.id)
+        .single();
+
+      if (userError) return;
+
+      const userPermissions = userData || {};
+      const hiddenChats = userPermissions.hidden_chats || [];
+
+      // Get user's chats
+      let chatsQuery = supabase
+        .from('chats')
+        .select(`
+          id,
+          type,
+          chat_participants!inner(
+            user_id,
+            last_read_at
+          )
+        `)
+        .eq('chat_participants.user_id', currentUser.id)
+        .eq('chat_participants.is_active', true)
+        .eq('is_active', true);
+
+      // Exclude Team Inspire chat if user doesn't have access
+      if (!userPermissions.team_inspire_enabled) {
+        chatsQuery = chatsQuery.neq('type', 'mandatory');
+      }
+
+      // Exclude hidden chats
+      if (hiddenChats.length > 0) {
+        chatsQuery = chatsQuery.not('id', 'in', `(${hiddenChats.map(id => `"${id}"`).join(',')})`);
+      }
+
+      const { data: userChats, error: chatsError } = await chatsQuery;
+      if (chatsError) return;
+
+      // Calculate total unread count across all chats
+      let totalUnread = 0;
+
+      for (const chat of userChats || []) {
+        const userParticipant = chat.chat_participants.find(p => p.user_id === currentUser.id);
+        const lastReadAt = userParticipant?.last_read_at;
+
+        if (lastReadAt) {
+          const { count } = await supabase
+            .from('chat_messages')
+            .select('*', { count: 'exact', head: true })
+            .eq('chat_id', chat.id)
+            .eq('is_deleted', false)
+            .neq('sender_id', currentUser.id)
+            .gt('sent_at', lastReadAt);
+
+          totalUnread += count || 0;
+        } else {
+          // If no last_read_at, count all messages from others
+          const { count } = await supabase
+            .from('chat_messages')
+            .select('*', { count: 'exact', head: true })
+            .eq('chat_id', chat.id)
+            .eq('is_deleted', false)
+            .neq('sender_id', currentUser.id);
+
+          totalUnread += count || 0;
+        }
+      }
+
+      setUnreadCount(totalUnread);
+    } catch (error) {
+      console.error('Error loading unread count:', error);
+    }
+  };
 
   const handleNavClick = (tab) => {
     // Handle special navigation cases
@@ -93,13 +187,20 @@ function BottomNav({ activeTab, onTabChange, user }) {
           <span className="nav-label">Schedule</span>
         </button>
 
-        <button 
+        <button
           onClick={() => handleNavClick('chat')}
           className={`nav-button ${activeTab === 'chat' ? 'active' : ''}`}
         >
-          <svg className="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
+          <div className="nav-icon-container">
+            <svg className="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            {unreadCount > 0 && (
+              <div className="nav-badge">
+                {unreadCount > 99 ? '99+' : unreadCount}
+              </div>
+            )}
+          </div>
           <span className="nav-label">Chat</span>
         </button>
 
