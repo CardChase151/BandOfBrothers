@@ -140,7 +140,13 @@ function BottomNav({ activeTab, onTabChange, user }) {
       setShowMoreNav(false);
       return;
     }
-    
+
+    if (tab === 'calculator') {
+      navigate('/calculator');
+      setShowMoreNav(false);
+      return;
+    }
+
     if (tab !== 'more') {
       setShowMoreNav(false);
       onTabChange(tab);

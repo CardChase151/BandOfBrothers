@@ -71,7 +71,7 @@ function Home() {
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    
+
     // Navigate to specific routes for certain tabs
     if (tab === 'training') {
       navigate('/training');
@@ -87,7 +87,12 @@ function Home() {
       navigate('/licensing');
       return;
     }
-    
+
+    if (tab === 'calculator') {
+      navigate('/calculator');
+      return;
+    }
+
     console.log(`Navigating to: ${tab}`);
   };
 
