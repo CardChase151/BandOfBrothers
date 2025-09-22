@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import { initializePushNotifications } from './main/pushNotifications';
 import Login from './onboarding/login';
 import CreateAccount from './onboarding/createAccount';
 import EmailVerify from './onboarding/emailVerify';
+import EmailConfirm from './onboarding/emailConfirm';
 import ForgotPassword from './onboarding/forgotPassword';
 import NewPassword from './onboarding/newPassword';
 import Home from './main/home';
@@ -19,6 +20,16 @@ import ChatMessage from './main/chatmessage';
 import Admin from './admin/admin';
 import Admin2 from './admin/admin2';
 import Profile from './main/profile';
+
+function NavigationWatcher() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Navigation watcher - no alerts for now
+  }, [location]);
+
+  return null;
+}
 
 function App() {
   const [user, setUser] = useState(null);
@@ -55,12 +66,14 @@ function App() {
 
   return (
     <Router>
+      <NavigationWatcher />
       <div className="App" style={{ overflow: 'hidden', height: '100vh', width: '100vw' }}>
         <Routes>
           {/* Authentication Routes */}
           <Route path="/" element={<Login />} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/email-verify" element={<EmailVerify />} />
+          <Route path="/confirm" element={<EmailConfirm />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/new-password" element={<NewPassword />} />
           

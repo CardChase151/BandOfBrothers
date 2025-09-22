@@ -13,6 +13,7 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log('🏠 HOME.JS LOADED - Team Inspire!');
     // Check if user is logged in
     const checkUser = async () => {
       try {
@@ -115,7 +116,7 @@ function Home() {
             {/* VP Message Card */}
             <div className="vp-message-card">
               <h3 className="vp-message-title">
-                A Big Welcome from your Vice Presidents
+                Message from Leadership
               </h3>
               <p className="vp-names">
                 Tom and Heidi Kellis!

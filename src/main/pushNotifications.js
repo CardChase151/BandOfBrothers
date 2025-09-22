@@ -3,26 +3,23 @@ import { supabase } from '../supabaseClient';
 
 export const initializePushNotifications = async () => {
   try {
+    console.log('🚀 PUSH NOTIFICATIONS FUNCTION CALLED!');
     console.log('Initializing push notifications...');
+    console.log('CONSOLE: initializePushNotifications() was called!');
 
-    // Request permission to use push notifications
-    // iOS will show a prompt asking for permission
-    let permStatus = await PushNotifications.requestPermissions();
-
-    if (permStatus.receive === 'granted') {
-      console.log('Push notification permissions granted');
-
-      // Register with Apple Push Notification service
-      // This will return a device token
-      await PushNotifications.register();
-    } else {
-      console.log('Push notification permissions denied');
+    // Check if PushNotifications is available
+    if (!PushNotifications) {
+      console.error('ERROR: PushNotifications plugin not available!');
       return;
     }
 
-    // Listen for registration events
+    // Set up listeners FIRST, before registering
+    console.log('Setting up push notification listeners...');
+
     PushNotifications.addListener('registration', async (token) => {
+      console.log('🎉 PUSH TOKEN RECEIVED!');
       console.log('Push registration success, token: ' + token.value);
+      console.log('Token length:', token.value.length);
 
       // Get the current user from Supabase auth
       const { data: { user }, error: userError } = await supabase.auth.getUser();
@@ -35,9 +32,10 @@ export const initializePushNotifications = async () => {
           .eq('id', user.id);
 
         if (updateError) {
-          console.error('Error storing push token:', updateError);
+          console.error('❌ Error storing push token:', updateError);
         } else {
-          console.log('Push token stored successfully');
+          console.log('✅ Push token stored successfully in Supabase!');
+          console.log('User ID:', user.id);
         }
       } else {
         console.error('No authenticated user found:', userError);
@@ -76,6 +74,30 @@ export const initializePushNotifications = async () => {
         }));
       }
     });
+
+    // Now request permissions and register AFTER listeners are set up
+    let permStatus = await PushNotifications.requestPermissions();
+
+    // Wait a moment for iOS to process the permission, then check actual status
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    let currentStatus = await PushNotifications.checkPermissions();
+
+    // Since permissions are enabled in iOS Settings but plugin returns undefined,
+    // let's try to register anyway (iOS will reject if not actually permitted)
+    console.log('🚀 Attempting registration despite undefined permission status...');
+
+    try {
+      await PushNotifications.register();
+      console.log('📱 Registration request sent to Apple');
+
+      // Set a timeout to check if token never arrives
+      setTimeout(() => {
+        console.log('DEBUG: 10 seconds passed, no token received. This indicates either Apple Push service is not responding or permissions are actually denied.');
+      }, 10000);
+    } catch (registerError) {
+      console.error('Registration error:', registerError);
+      return;
+    }
 
   } catch (error) {
     console.error('Error initializing push notifications:', error);

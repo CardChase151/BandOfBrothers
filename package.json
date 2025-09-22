@@ -1,11 +1,11 @@
 {
   "name": "teaminspire",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@capacitor/cli": "^6.2.1",
-    "@capacitor/core": "^7.4.3",
-    "@capacitor/ios": "^7.4.3",
+    "@capacitor/core": "^6.2.1",
+    "@capacitor/ios": "^6.2.1",
     "@capacitor/keyboard": "^7.0.3",
     "@capacitor/push-notifications": "^7.0.3",
     "@supabase/supabase-js": "^2.56.0",

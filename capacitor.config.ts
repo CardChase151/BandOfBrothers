@@ -5,17 +5,29 @@ const config: CapacitorConfig = {
   appName: 'Team Inspire',
   webDir: 'build',
   server: {
-    url: 'http://192.168.1.154:3000',
-    cleartext: true
+    url: 'https://teaminspire.org',
+    allowNavigation: [
+      'teaminspire.org',
+      '*.teaminspire.org'
+    ]
   },
   ios: {
     contentInset: 'never',
     allowsLinkPreview: false,
-    scrollEnabled: false
+    scrollEnabled: false,
+    scheme: 'teaminspire'
+  },
+  android: {
+    scheme: 'teaminspire'
   },
   plugins: {
     StatusBar: {
       style: 'dark'
+    },
+    App: {
+      appUrlOpen: {
+        iosCustomScheme: 'teaminspire'
+      }
     }
   }
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import './onboarding.css';
@@ -8,7 +8,31 @@ function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isCheckingSession, setIsCheckingSession] = useState(true);
   const navigate = useNavigate();
+
+  // Check for existing session on component mount
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+
+        if (session && !error) {
+          console.log('Existing session found, redirecting to home');
+          navigate('/home', { replace: true });
+          return;
+        }
+
+        console.log('No existing session found');
+        setIsCheckingSession(false);
+      } catch (error) {
+        console.error('Error checking session:', error);
+        setIsCheckingSession(false);
+      }
+    };
+
+    checkSession();
+  }, [navigate]);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -96,6 +120,18 @@ function Login() {
   const goToForgotPassword = () => {
     navigate('/forgot-password');
   };
+
+  // Show loading while checking session
+  if (isCheckingSession) {
+    return (
+      <div className="login-container">
+        <h1 className="login-title">Team Ins<span className="login-accent">p</span>ire</h1>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <div className="spinner"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="login-container">
