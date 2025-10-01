@@ -209,6 +209,31 @@ function Home() {
         <div className="app-container" style={{marginTop: '0', minHeight: '100%', paddingBottom: '20px'}}>
           <h1 className="app-title">Team Ins<span className="brand-accent">p</span>ire</h1>
           {renderContent()}
+
+          {/* Footer */}
+          <div style={{
+            textAlign: 'center',
+            padding: '20px',
+            marginTop: '40px',
+            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+            fontSize: '0.75rem',
+            color: '#666666'
+          }}>
+            <a
+              href="https://appcatalyst.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: '#007bff',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease'
+              }}
+              onMouseEnter={(e) => e.target.style.color = '#0056b3'}
+              onMouseLeave={(e) => e.target.style.color = '#007bff'}
+            >
+              Built by AppCatalyst
+            </a>
+          </div>
         </div>
       </div>
 
