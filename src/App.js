@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { supabase } from './supabaseClient';
-import { initializePushNotifications } from './main/pushNotifications';
 import Login from './onboarding/login';
 import CreateAccount from './onboarding/createAccount';
 import EmailVerify from './onboarding/emailVerify';
@@ -36,9 +35,6 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Initialize push notifications on app startup
-    initializePushNotifications();
-
     // For now, just set loading to false and don't fetch profiles
     console.log('Setting loading to false immediately');
     setLoading(false);
@@ -49,8 +45,6 @@ function App() {
         console.log('Auth event:', event, session?.user?.email);
         if (event === 'SIGNED_IN' && session?.user) {
           console.log('User signed in, not fetching profile yet');
-          // Re-initialize push notifications when user signs in
-          initializePushNotifications();
         } else if (event === 'SIGNED_OUT') {
           setUser(null);
         }
