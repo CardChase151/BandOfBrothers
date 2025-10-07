@@ -1,0 +1,294 @@
+/* Container */
+.prayer-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #000000;
+  padding-bottom: 100px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prayer-container::-webkit-scrollbar {
+  display: none;
+}
+
+.prayer-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Header */
+.prayer-header {
+  padding: 24px 20px;
+  border-bottom: 1px solid #333;
+}
+
+.prayer-title {
+  font-size: 1.875rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.05em;
+}
+
+.prayer-subtitle {
+  color: #888;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Action Buttons */
+.action-buttons {
+  padding: 24px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.action-btn {
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.action-btn.primary {
+  background: linear-gradient(to right, #b45309, #d97706);
+  color: #ffffff;
+}
+
+.action-btn.secondary {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #333;
+}
+
+/* Filter Pills - Simple Floating */
+.filter-container {
+  padding: 0 20px 20px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-container::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.filter-pill {
+  padding: 8px 16px;
+  background-color: #1a1a1a;
+  color: #999;
+  border-radius: 20px;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.filter-pill.active {
+  background-color: #d97706;
+  color: #000000;
+}
+
+.filter-pill svg {
+  flex-shrink: 0;
+}
+
+/* Prayer Feed */
+.prayer-feed {
+  padding: 0 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Prayer Cards */
+.prayer-card {
+  background-color: #000000;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.author-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #000000;
+  border: 1px solid #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-icon {
+  color: #d97706;
+}
+
+.avatar-letter {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.author-name {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.time-ago {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.category-tag {
+  padding: 4px 12px;
+  background-color: #000000;
+  border: 1px solid #333;
+  border-radius: 20px;
+}
+
+.category-text {
+  font-size: 0.75rem;
+  color: #d97706;
+  font-weight: 600;
+}
+
+.prayer-text {
+  color: #cccccc;
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+}
+
+/* Card Actions */
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #333;
+}
+
+.pray-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: rgba(217, 119, 6, 0.15);
+  color: #d97706;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.prayer-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.prayer-stats svg {
+  color: #d97706;
+}
+
+.stat-num {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.stat-text {
+  color: #888;
+}
+
+.comment-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: transparent;
+  color: #888;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Footer */
+.prayer-footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+  border-top: 1px solid #333;
+}
+
+.prayer-footer a {
+  color: #666666;
+  text-decoration: none;
+  font-size: 0.75rem;
+}
+
+/* Loading */
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #d97706;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
