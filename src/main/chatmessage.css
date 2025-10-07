@@ -27,17 +27,26 @@
 }
 
 .back-button-chat {
-  background-color: #ff0000;
+  background: linear-gradient(to right, #b45309, #d97706);
   color: #ffffff;
   border: none;
-  border-radius: 50%;
-  width: 40px;
+  border-radius: 20px;
   height: 40px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
+  transition: opacity 0.2s ease;
+}
+
+.back-button-chat:active {
+  opacity: 0.8;
 }
 
 .chat-info {
@@ -46,9 +55,11 @@
 
 .chat-title {
   font-size: 1.3rem;
-  font-weight: 600;
+  font-weight: 900;
   margin: 0;
   color: #ffffff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .chat-subtitle {
@@ -120,6 +131,11 @@
   max-height: 120px;
   overflow-y: auto;
   line-height: 1.4;
+  transition: border-color 0.2s ease;
+}
+
+.message-input:focus {
+  border-color: #d97706;
 }
 
 .message-input::placeholder {
@@ -174,7 +190,7 @@
 
 .message-content {
   padding: 12px 16px;
-  border-radius: 12px;
+  border-radius: 16px;
   color: #ffffff;
   font-size: 0.95rem;
   line-height: 1.4;
@@ -183,14 +199,14 @@
 }
 
 .message-content.current-user {
-  background-color: #ff0000;
-  border-bottom-right-radius: 4px;
+  background-color: #d97706;
+  border-bottom-right-radius: 6px;
 }
 
 .message-content.other-user {
   background-color: #1a1a1a;
   border: 1px solid #333;
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 6px;
 }
 
 .message-time-current {
@@ -218,13 +234,40 @@
 }
 
 .send-button.active {
-  background-color: #ff0000;
+  background-color: #d97706;
   cursor: pointer;
   opacity: 1;
+}
+
+.send-button.active:active {
+  background-color: #b45309;
 }
 
 .send-button:not(.active) {
   background-color: #333;
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Admin features */
+.message-bubble.admin-hidden {
+  opacity: 0.7;
+}
+
+.admin-hidden-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chat-menu-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
 }

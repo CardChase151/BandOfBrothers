@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHandsPraying } from '@fortawesome/free-solid-svg-icons';
 import './bottomnav.css';
 
 function BottomNav({ activeTab, onTabChange, user }) {
@@ -117,13 +119,13 @@ function BottomNav({ activeTab, onTabChange, user }) {
       return;
     }
 
-    if (tab === 'schedule') {
+    if (tab === 'retreats') {
       navigate('/schedule');
       setShowMoreNav(false);
       return;
     }
 
-    if (tab === 'licensing') {
+    if (tab === 'merch') {
       navigate('/licensing');
       setShowMoreNav(false);
       return;
@@ -141,7 +143,7 @@ function BottomNav({ activeTab, onTabChange, user }) {
       return;
     }
 
-    if (tab === 'calculator') {
+    if (tab === 'prayer') {
       navigate('/calculator');
       setShowMoreNav(false);
       return;
@@ -155,14 +157,13 @@ function BottomNav({ activeTab, onTabChange, user }) {
 
   const handleMoreClick = () => {
     setShowMoreNav(!showMoreNav);
-    // Don't call onTabChange for 'more' - it should only expand/collapse
   };
 
   return (
     <div className={`bottom-nav ${showMoreNav ? 'expanded' : ''}`}>
       {/* Main Navigation Row */}
       <div className="nav-row main-row">
-        <button 
+        <button
           onClick={() => handleNavClick('home')}
           className={`nav-button ${activeTab === 'home' ? 'active' : ''}`}
         >
@@ -172,7 +173,7 @@ function BottomNav({ activeTab, onTabChange, user }) {
           <span className="nav-label">Home</span>
         </button>
 
-        <button 
+        <button
           onClick={() => handleNavClick('notifications')}
           className={`nav-button ${activeTab === 'notifications' ? 'active' : ''}`}
         >
@@ -181,16 +182,6 @@ function BottomNav({ activeTab, onTabChange, user }) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.73 21a2 2 0 01-3.46 0" />
           </svg>
           <span className="nav-label">Notifications</span>
-        </button>
-
-        <button 
-          onClick={() => handleNavClick('schedule')}
-          className={`nav-button ${activeTab === 'schedule' ? 'active' : ''}`}
-        >
-          <svg className="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          <span className="nav-label">Schedule</span>
         </button>
 
         <button
@@ -207,10 +198,18 @@ function BottomNav({ activeTab, onTabChange, user }) {
               </div>
             )}
           </div>
-          <span className="nav-label">Chat</span>
+          <span className="nav-label">Brotherhood</span>
         </button>
 
-        <button 
+        <button
+          onClick={() => handleNavClick('prayer')}
+          className={`nav-button ${activeTab === 'prayer' ? 'active' : ''}`}
+        >
+          <FontAwesomeIcon icon={faHandsPraying} className="nav-icon" style={{ fontSize: '20px' }} />
+          <span className="nav-label">Prayer</span>
+        </button>
+
+        <button
           onClick={handleMoreClick}
           className={`nav-button ${showMoreNav ? 'active' : ''}`}
         >
@@ -224,17 +223,7 @@ function BottomNav({ activeTab, onTabChange, user }) {
       {/* Expanded Navigation Row */}
       {showMoreNav && (
         <div className="nav-row expanded-row">
-          <button 
-            onClick={() => handleNavClick('licensing')}
-            className={`nav-button ${activeTab === 'licensing' ? 'active' : ''}`}
-          >
-            <svg className="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <span className="nav-label">Licensing</span>
-          </button>
-
-          <button 
+          <button
             onClick={() => handleNavClick('training')}
             className={`nav-button ${activeTab === 'training' ? 'active' : ''}`}
           >
@@ -244,26 +233,27 @@ function BottomNav({ activeTab, onTabChange, user }) {
             <span className="nav-label">Training</span>
           </button>
 
-          <button 
-            onClick={() => handleNavClick('calculator')}
-            className={`nav-button ${activeTab === 'calculator' ? 'active' : ''}`}
+          <button
+            onClick={() => handleNavClick('retreats')}
+            className={`nav-button ${activeTab === 'retreats' ? 'active' : ''}`}
           >
             <svg className="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <rect x="4" y="2" width="16" height="20" rx="2" strokeWidth={1.5}></rect>
-              <rect x="6" y="4" width="12" height="3" rx="1" strokeWidth={1}></rect>
-              <rect x="6" y="9" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
-              <rect x="10.75" y="9" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
-              <rect x="15.5" y="9" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
-              <rect x="6" y="13" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
-              <rect x="10.75" y="13" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
-              <rect x="15.5" y="13" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
-              <rect x="6" y="17" width="2.5" height="2.5" rx="0.3" strokeWidth={1}></rect>
-              <rect x="10.75" y="17" width="6.75" height="2.5" rx="0.3" strokeWidth={1}></rect>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <span className="nav-label">Calculator</span>
+            <span className="nav-label">Retreats</span>
           </button>
 
-          <button 
+          <button
+            onClick={() => handleNavClick('merch')}
+            className={`nav-button ${activeTab === 'merch' ? 'active' : ''}`}
+          >
+            <svg className="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            <span className="nav-label">Merch</span>
+          </button>
+
+          <button
             onClick={() => handleNavClick('profile')}
             className={`nav-button ${activeTab === 'profile' ? 'active' : ''}`}
           >
@@ -275,7 +265,7 @@ function BottomNav({ activeTab, onTabChange, user }) {
 
           {/* Admin button - only visible to admins */}
           {isAdmin ? (
-            <button 
+            <button
               onClick={() => handleNavClick('admin')}
               className={`nav-button ${activeTab === 'admin' ? 'active' : ''}`}
             >

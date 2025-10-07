@@ -37,7 +37,7 @@
   }
   
   .back-button-create {
-    background-color: #ff0000;
+    background-color: #d97706;
     color: #ffffff;
     border: none;
     border-radius: 50%;
@@ -51,10 +51,11 @@
     font-weight: bold;
     transition: background-color 0.2s ease;
     flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
   }
-  
+
   .back-button-create:active {
-    background-color: #cc0000;
+    background-color: #b45309;
   }
   
   .header-content {
@@ -93,7 +94,7 @@
   
   .selected-count {
     font-size: 0.85rem;
-    color: #ff0000;
+    color: #d97706;
     font-weight: 600;
     margin-bottom: 2px;
   }
@@ -149,16 +150,16 @@
     width: 100%;
     background-color: #1a1a1a;
     border: 1px solid #333;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 12px 16px 12px 44px;
     color: #ffffff;
     font-size: 0.95rem;
     outline: none;
     transition: border-color 0.2s ease;
   }
-  
+
   .search-input:focus {
-    border-color: #ff0000;
+    border-color: #d97706;
   }
   
   .search-input::placeholder {
@@ -183,7 +184,7 @@
   
   .loading-users .loader {
     border: 3px solid #333;
-    border-top: 3px solid #ff0000;
+    border-top: 3px solid #d97706;
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -250,19 +251,19 @@
   }
   
   .user-card.selected {
-    background-color: rgba(255, 0, 0, 0.1);
-    border-color: rgba(255, 0, 0, 0.2);
+    background-color: rgba(217, 119, 6, 0.1);
+    border-color: rgba(217, 119, 6, 0.2);
   }
-  
+
   .user-card.selected:active {
-    background-color: rgba(255, 0, 0, 0.15);
+    background-color: rgba(217, 119, 6, 0.15);
   }
-  
+
   .user-avatar {
     width: 50px;
     height: 50px;
     background-color: #2d2d2d;
-    border-radius: 8px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -271,9 +272,9 @@
     font-size: 1.1rem;
     flex-shrink: 0;
   }
-  
+
   .user-card.selected .user-avatar {
-    background-color: #ff0000;
+    background-color: #d97706;
   }
   
   .user-info {
@@ -306,7 +307,7 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    color: #ff0000;
+    color: #d97706;
   }
   
   /* ========== MESSAGE SECTION ========== */
@@ -346,7 +347,7 @@
     width: 100%;
     background-color: #2d2d2d;
     border: 1px solid #444;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 12px 16px;
     color: #ffffff;
     font-size: 0.95rem;
@@ -357,9 +358,9 @@
     margin-bottom: 12px;
     min-height: 80px;
   }
-  
+
   .first-message-input:focus {
-    border-color: #ff0000;
+    border-color: #d97706;
   }
   
   .first-message-input::placeholder {
@@ -376,7 +377,7 @@
     background-color: #333;
     color: #ffffff;
     border: none;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 14px 20px;
     font-size: 1rem;
     font-weight: 600;
@@ -388,14 +389,14 @@
     gap: 8px;
     min-height: 52px;
   }
-  
+
   .create-chat-button.active {
-    background-color: #ff0000;
+    background-color: #d97706;
     cursor: pointer;
   }
-  
+
   .create-chat-button.active:active {
-    background-color: #cc0000;
+    background-color: #b45309;
   }
   
   .create-chat-button.disabled {
@@ -583,14 +584,14 @@
 }
 
 .required {
-  color: #ff0000;
+  color: #d97706;
 }
 
 .group-name-input {
   width: 100%;
   background-color: #2d2d2d;
   border: 1px solid #444;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 12px 16px;
   color: #ffffff;
   font-size: 0.95rem;
@@ -600,7 +601,7 @@
 }
 
 .group-name-input:focus {
-  border-color: #ff0000;
+  border-color: #d97706;
 }
 
 .group-name-input::placeholder {

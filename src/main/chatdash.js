@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { hideChat } from '../utils/chatHelpers';
 import './chatdash.css';
 
 function ChatDash() {
@@ -15,6 +16,9 @@ function ChatDash() {
   const [searchMode, setSearchMode] = useState('Users');
   const [showSearch, setShowSearch] = useState(false);
   const [userPermissions, setUserPermissions] = useState({});
+  const [longPressChat, setLongPressChat] = useState(null);
+  const [showChatActions, setShowChatActions] = useState(false);
+  const longPressTimer = useRef(null);
   const navigate = useNavigate();
 
   const filterOptions = ['All', 'Individual', 'Groups'];
@@ -398,14 +402,15 @@ function ChatDash() {
   const getChatIcon = (chat) => {
     if (chat.type === 'mandatory') {
       return (
-        <img 
-          src="/assets/logo.jpg" 
-          alt="Team Inspire"
-          className="chat-icon-image"
+        <img
+          src="/bob_logo.png"
+          alt="Band of Brothers"
+          className="chat-icon-svg"
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />
       );
     }
-    
+
     if (chat.type === 'individual') {
       return (
         <svg className="chat-icon-svg" viewBox="0 0 24 24" fill="currentColor">
@@ -413,7 +418,7 @@ function ChatDash() {
         </svg>
       );
     }
-    
+
     // Group chat icon
     return (
       <svg className="chat-icon-svg" viewBox="0 0 24 24" fill="currentColor">
@@ -423,35 +428,74 @@ function ChatDash() {
   };
 
   const getChatSubtitle = (chat) => {
-    if (chat.type === 'mandatory') return `${chat.participantCount} members • Required`;
-    if (chat.type === 'group') return `${chat.participantCount} members`;
+    if (chat.type === 'mandatory') return `${chat.participantCount} brothers • Main chat`;
+    if (chat.type === 'group') return `${chat.participantCount} brothers`;
     return 'Direct message';
   };
 
   const formatTimestamp = (timestamp) => {
     if (!timestamp) return '';
-    
+
     const date = new Date(timestamp);
     const now = new Date();
     const diffInHours = (now - date) / (1000 * 60 * 60);
-    
+
     if (diffInHours < 24) {
       // Same day - show time
-      return date.toLocaleTimeString('en-US', { 
-        hour: 'numeric', 
+      return date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
         minute: '2-digit',
-        hour12: true 
+        hour12: true
       });
     } else if (diffInHours < 168) {
       // Within a week - show day of week
       return date.toLocaleDateString('en-US', { weekday: 'short' });
     } else {
       // Older - show date
-      return date.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric' 
+      return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
       });
     }
+  };
+
+  const handleLongPressStart = (chat, e) => {
+    // Only allow hiding individual chats (not mandatory groups)
+    if (chat.type === 'mandatory') return;
+
+    e.preventDefault();
+    longPressTimer.current = setTimeout(() => {
+      setLongPressChat(chat);
+      setShowChatActions(true);
+    }, 500); // 500ms long press
+  };
+
+  const handleLongPressEnd = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  };
+
+  const handleHideChat = async () => {
+    if (!longPressChat) return;
+
+    const result = await hideChat(user.id, longPressChat.id);
+
+    if (result.success) {
+      // Remove from local state immediately
+      setAllChats(prev => prev.filter(c => c.id !== longPressChat.id));
+      setFilteredChats(prev => prev.filter(c => c.id !== longPressChat.id));
+      setShowChatActions(false);
+      setLongPressChat(null);
+    } else {
+      alert('Error hiding chat: ' + result.error);
+    }
+  };
+
+  const closeChatActions = () => {
+    setShowChatActions(false);
+    setLongPressChat(null);
   };
 
   if (loading) {
@@ -471,65 +515,49 @@ function ChatDash() {
       bottom: '0',
       overflow: 'hidden'
     }}>
-      {/* Dynamic Bar Background - Black */}
+      {/* Header Row 1: Back Button and Action Buttons */}
       <div style={{
-        backgroundColor: '#000000',
         position: 'fixed',
-        top: '0',
+        top: '20px',
         left: '0',
         right: '0',
-        height: '60px',
-        zIndex: '999'
-      }}></div>
-
-      {/* Back Button - Fixed Position */}
-      <button
-        onClick={handleBackToHome}
-        style={{
-          position: 'fixed',
-          top: '70px',
-          left: '20px',
-          zIndex: '1000',
-          width: '36px',
-          height: '36px',
-          fontSize: '1.5rem',
-          boxShadow: '0 2px 8px rgba(255, 0, 0, 0.2)',
-          borderRadius: '50%',
-          backgroundColor: '#ff0000',
-          color: '#ffffff',
-          border: 'none',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '0',
-          cursor: 'pointer',
-          fontWeight: 'bold'
-        }}
-      >
-        ←
-      </button>
-
-      {/* Title - Fixed Position */}
-      <div style={{
-        position: 'fixed',
-        top: '70px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        zIndex: '1000'
-      }}>
-        <h1 className="app-title" style={{margin: '0', fontSize: '2rem', whiteSpace: 'nowrap'}}>Chats</h1>
-      </div>
-
-      {/* Header Actions - Fixed Position */}
-      <div style={{
-        position: 'fixed',
-        top: '70px',
-        right: '20px',
         zIndex: '1000',
         display: 'flex',
         alignItems: 'center',
-        gap: '8px'
+        justifyContent: 'space-between',
+        padding: '0 20px'
       }}>
+        {/* Back Button */}
+        <button
+          onClick={handleBackToHome}
+          style={{
+            height: '36px',
+            padding: '0 16px',
+            fontSize: '0.9rem',
+            boxShadow: '0 2px 8px rgba(217, 119, 6, 0.3)',
+            borderRadius: '18px',
+            background: 'linear-gradient(to right, #b45309, #d97706)',
+            color: '#ffffff',
+            border: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            letterSpacing: '0.05em'
+          }}
+        >
+          <span style={{ fontSize: '1.2rem' }}>←</span>
+          <span>BACK</span>
+        </button>
+
+        {/* Action Buttons */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
+        }}>
         <button onClick={toggleSearch} style={{
           width: '36px',
           height: '36px',
@@ -565,12 +593,32 @@ function ChatDash() {
             </svg>
           </button>
         )}
+        </div>
+      </div>
+
+      {/* Header Row 2: Title */}
+      <div style={{
+        position: 'fixed',
+        top: '76px',
+        left: '0',
+        right: '0',
+        zIndex: '1000',
+        textAlign: 'center',
+        padding: '0 20px'
+      }}>
+        <h1 className="app-title" style={{
+          margin: '0',
+          fontSize: '1.75rem',
+          fontWeight: '900',
+          letterSpacing: '0.05em',
+          textTransform: 'uppercase'
+        }}>Brotherhood</h1>
       </div>
 
       {/* Scrollable Content Container */}
       <div style={{
         position: 'fixed',
-        top: '120px',
+        top: '126px',
         left: '0',
         right: '0',
         bottom: '100px',
@@ -680,6 +728,11 @@ function ChatDash() {
                 key={chat.id}
                 className={`chat-card ${chat.type === 'mandatory' ? 'mandatory' : ''} ${chat.unreadCount > 0 ? 'unread' : ''}`}
                 onClick={() => handleChatClick(chat)}
+                onTouchStart={(e) => handleLongPressStart(chat, e)}
+                onTouchEnd={handleLongPressEnd}
+                onMouseDown={(e) => handleLongPressStart(chat, e)}
+                onMouseUp={handleLongPressEnd}
+                onMouseLeave={handleLongPressEnd}
               >
                 <div className={`chat-avatar ${chat.type === 'mandatory' ? 'mandatory' : ''}`}>
                   {getChatIcon(chat)}
@@ -733,6 +786,92 @@ function ChatDash() {
       </div>
         </div>
       </div>
+
+      {/* Chat Actions Modal */}
+      {showChatActions && longPressChat && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px'
+          }}
+          onClick={closeChatActions}
+        >
+          <div
+            style={{
+              backgroundColor: '#1a1a1a',
+              borderRadius: '16px',
+              padding: '24px',
+              minWidth: '280px',
+              maxWidth: '90%',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 style={{
+              margin: '0 0 16px 0',
+              color: '#ffffff',
+              fontSize: '1.2rem',
+              fontWeight: 'bold'
+            }}>
+              {longPressChat.type === 'individual'
+                ? longPressChat.otherParticipantName || 'Chat'
+                : longPressChat.name}
+            </h3>
+
+            <button
+              onClick={handleHideChat}
+              style={{
+                width: '100%',
+                padding: '16px',
+                backgroundColor: '#d97706',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                marginBottom: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px'
+              }}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                <line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" strokeWidth="2"/>
+              </svg>
+              Hide Chat
+            </button>
+
+            <button
+              onClick={closeChatActions}
+              style={{
+                width: '100%',
+                padding: '16px',
+                backgroundColor: '#2d2d2d',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

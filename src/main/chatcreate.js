@@ -83,9 +83,9 @@ function ChatCreate() {
       const teamMembers = users.map(userRecord => {
         const firstName = userRecord.first_name || '';
         const lastName = userRecord.last_name || '';
-        const fullName = firstName && lastName 
+        const fullName = firstName && lastName
           ? `${firstName} ${lastName}`.trim()
-          : firstName || lastName || 'Team Member';
+          : firstName || lastName || 'Brother';
 
         return {
           user_id: userRecord.id,
@@ -142,9 +142,9 @@ function ChatCreate() {
   };
 
   const getChatTypeText = () => {
-    if (selectedUsers.length === 0) return 'Select team members';
+    if (selectedUsers.length === 0) return 'Select brothers';
     if (selectedUsers.length === 1) return 'Individual chat';
-    return `Group chat (${selectedUsers.length} members)`;
+    return `Group chat (${selectedUsers.length} brothers)`;
   };
 
   const getSelectedNamesText = () => {
@@ -219,7 +219,7 @@ function ChatCreate() {
 
   const handleCreateChat = async () => {
     if (selectedUsers.length === 0) {
-      alert('Please select at least one team member');
+      alert('Please select at least one brother');
       return;
     }
 
@@ -368,23 +368,25 @@ function ChatCreate() {
           top: '70px',
           left: '20px',
           zIndex: '1000',
-          width: '36px',
           height: '36px',
-          fontSize: '1.5rem',
-          boxShadow: '0 2px 8px rgba(255, 0, 0, 0.2)',
-          borderRadius: '50%',
-          backgroundColor: '#ff0000',
+          padding: '0 16px',
+          fontSize: '0.9rem',
+          boxShadow: '0 2px 8px rgba(217, 119, 6, 0.3)',
+          borderRadius: '18px',
+          background: 'linear-gradient(to right, #b45309, #d97706)',
           color: '#ffffff',
           border: 'none',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '0',
+          gap: '6px',
           cursor: 'pointer',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          letterSpacing: '0.05em'
         }}
       >
-        ←
+        <span style={{ fontSize: '1.2rem' }}>←</span>
+        <span>BACK</span>
       </button>
 
       {/* Title - Fixed Position */}
@@ -395,7 +397,14 @@ function ChatCreate() {
         transform: 'translateX(-50%)',
         zIndex: '1000'
       }}>
-        <h1 className="app-title" style={{margin: '0', fontSize: '2rem', whiteSpace: 'nowrap'}}>New Chat</h1>
+        <h1 className="app-title" style={{
+          margin: '0',
+          fontSize: '2rem',
+          whiteSpace: 'nowrap',
+          fontWeight: '900',
+          letterSpacing: '0.05em',
+          textTransform: 'uppercase'
+        }}>New Chat</h1>
       </div>
 
       {/* Scrollable Content Container */}
@@ -476,7 +485,7 @@ function ChatCreate() {
           </svg>
           <input
             type="text"
-            placeholder="Search team members..."
+            placeholder="Search brothers..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-input"
@@ -489,15 +498,15 @@ function ChatCreate() {
         {isLoadingUsers ? (
           <div className="loading-users">
             <div className="loader"></div>
-            <p>Loading team members...</p>
+            <p>Loading brothers...</p>
           </div>
         ) : filteredUsers.length === 0 ? (
           <div className="empty-users">
             <svg width="64" height="64" fill="none" stroke="#666" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
-            <h3>No team members found</h3>
-            <p>{searchQuery ? 'Try adjusting your search.' : 'No team members available.'}</p>
+            <h3>No brothers found</h3>
+            <p>{searchQuery ? 'Try adjusting your search.' : 'No brothers available.'}</p>
           </div>
         ) : (
           <div className="users-list">
@@ -518,7 +527,7 @@ function ChatCreate() {
                     {teamUser.full_name}
                   </div>
                   <div className="user-email">
-                    {teamUser.email || 'Team member'}
+                    {teamUser.email || 'Brother'}
                   </div>
                 </div>
                 <div className="selection-indicator">

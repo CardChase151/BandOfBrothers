@@ -41,7 +41,7 @@ html, body {
 }
 
 .back-button {
-  background-color: #ff0000;
+  background-color: #d97706;
   color: #ffffff;
   border: none;
   border-radius: 50%;
@@ -53,10 +53,11 @@ html, body {
   cursor: pointer;
   transition: background-color 0.2s ease;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
 }
 
 .back-button:active {
-  background-color: #cc0000;
+  background-color: #b45309;
 }
 
 .dash-title {
@@ -92,7 +93,7 @@ html, body {
 
 .search-toggle-button:active,
 .new-chat-button:active {
-  background-color: #ff0000;
+  background-color: #d97706;
 }
 
 /* New Chat Menu */
@@ -175,7 +176,7 @@ html, body {
 }
 
 .search-mode-btn.active {
-  background-color: #ff0000;
+  background-color: #d97706;
   color: #ffffff;
 }
 
@@ -203,7 +204,7 @@ html, body {
   width: 100%;
   background-color: #2d2d2d;
   border: 1px solid #444;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 12px 16px 12px 44px;
   color: #ffffff;
   font-size: 0.95rem;
@@ -212,7 +213,7 @@ html, body {
 }
 
 .search-input:focus {
-  border-color: #ff0000;
+  border-color: #d97706;
 }
 
 .search-input::placeholder {
@@ -242,7 +243,7 @@ html, body {
   display: flex;
   background-color: #1a1a1a;
   border-bottom: 1px solid #333;
-  padding: 0 20px;
+  padding: 0;
   gap: 4px;
 }
 
@@ -261,8 +262,8 @@ html, body {
 }
 
 .filter-tab.active {
-  color: #ff0000;
-  border-bottom-color: #ff0000;
+  color: #d97706;
+  border-bottom-color: #d97706;
 }
 
 .filter-tab:not(.active):active {
@@ -293,7 +294,7 @@ html, body {
   align-items: center;
   background-color: #1a1a1a;
   border: 1px solid #333;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 16px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -304,14 +305,14 @@ html, body {
 
 .chat-card:active {
   background-color: #2a2a2a;
-  border-color: #ff0000;
+  border-color: #d97706;
   transform: translateY(1px);
 }
 
-/* Mandatory Chat (Team Inspire) */
+/* Mandatory Chat (Band of Brothers Main) */
 .chat-card.mandatory {
-  background-color: rgba(255, 0, 0, 0.05);
-  border-color: #ff0000;
+  background-color: rgba(217, 119, 6, 0.05);
+  border-color: #d97706;
   position: relative;
 }
 
@@ -322,12 +323,12 @@ html, body {
   top: 0;
   bottom: 0;
   width: 4px;
-  background-color: #ff0000;
-  border-radius: 12px 0 0 12px;
+  background-color: #d97706;
+  border-radius: 16px 0 0 16px;
 }
 
 .chat-card.mandatory:active {
-  background-color: rgba(255, 0, 0, 0.1);
+  background-color: rgba(217, 119, 6, 0.1);
 }
 
 /* ========== CHAT AVATARS ========== */
@@ -335,7 +336,7 @@ html, body {
   width: 56px;
   height: 56px;
   background-color: #2d2d2d;
-  border-radius: 12px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -345,7 +346,7 @@ html, body {
 }
 
 .chat-avatar.mandatory {
-  background-color: #ff0000;
+  background-color: #d97706;
 }
 
 .chat-icon-image {
@@ -392,7 +393,7 @@ html, body {
 }
 
 .chat-title.mandatory {
-  color: #ff0000;
+  color: #d97706;
   font-weight: 700;
 }
 
@@ -444,7 +445,7 @@ html, body {
 
 .loader {
   border: 3px solid #333;
-  border-top: 3px solid #ff0000;
+  border-top: 3px solid #d97706;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -509,7 +510,7 @@ html, body {
   position: absolute;
   top: 0px;
   right: 0px;
-  background-color: #ff0000;
+  background-color: #d97706;
   color: #ffffff;
   border-radius: 50%;
   min-width: 20px;
@@ -538,7 +539,7 @@ html, body {
 .unread-dot {
   width: 12px;
   height: 12px;
-  background-color: #ff0000;
+  background-color: #d97706;
   border-radius: 50%;
   border: 2px solid #000000;
 }
@@ -565,7 +566,7 @@ html, body {
   }
   
   .filter-tabs {
-    padding: 0 24px;
+    padding: 0;
   }
   
   .chat-list {
@@ -627,7 +628,7 @@ html, body {
   }
   
   .filter-tabs {
-    padding: 0 16px;
+    padding: 0;
   }
   
   .filter-tab {
