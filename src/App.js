@@ -11,7 +11,7 @@ import Home from './main/home';
 import Training from './main/training';
 import Schedule from './main/schedule';
 import Licensing from './main/licensing';
-import Calculator from './main/calculator';
+import Prayer from './main/prayer';
 import NewRepStart from './main/newrepstart';
 import ChatDash from './main/chatdash';
 import ChatCreate from './main/chatcreate';
@@ -77,7 +77,7 @@ function App() {
           <Route path="/training" element={<Training />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/licensing" element={<Licensing />} />
-          <Route path="/calculator" element={<Calculator />} />
+          <Route path="/prayer" element={<Prayer />} />
           <Route path="/chat" element={<ChatDash />} />
           <Route path="/chat/create" element={<ChatCreate />} />
           <Route path="/chat/:chatId" element={<ChatMessage />} />

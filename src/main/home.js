@@ -108,8 +108,8 @@ function Home() {
       return;
     }
 
-    if (tab === 'calculator') {
-      navigate('/calculator');
+    if (tab === 'prayer') {
+      navigate('/prayer');
       return;
     }
 

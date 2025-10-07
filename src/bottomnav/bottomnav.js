@@ -144,7 +144,7 @@ function BottomNav({ activeTab, onTabChange, user }) {
     }
 
     if (tab === 'prayer') {
-      navigate('/calculator');
+      navigate('/prayer');
       setShowMoreNav(false);
       return;
     }
