@@ -61,7 +61,7 @@ function App() {
   return (
     <Router>
       <NavigationWatcher />
-      <div className="App" style={{ overflow: 'hidden', height: '100vh', width: '100vw' }}>
+      <div className="App" style={{ height: '100vh', width: '100vw' }}>
         <Routes>
           {/* Authentication Routes */}
           <Route path="/" element={<Login />} />

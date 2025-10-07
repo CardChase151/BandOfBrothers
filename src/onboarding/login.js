@@ -125,11 +125,14 @@ function Login() {
     return (
       <div style={{
         minHeight: '100vh',
+        minHeight: '100dvh',
         background: 'linear-gradient(to bottom right, #000000, #1a1a1a, #000000)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '2rem'
+        padding: '2rem',
+        overflow: 'auto',
+        WebkitOverflowScrolling: 'touch'
       }}>
         <div style={{
           width: '100%',
@@ -153,13 +156,17 @@ function Login() {
   return (
     <div style={{
       minHeight: '100vh',
+      minHeight: '100dvh',
       background: 'linear-gradient(to bottom right, #000000, #1a1a1a, #000000)',
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'center',
       padding: '2rem',
+      paddingTop: '4rem',
+      paddingBottom: '4rem',
       position: 'relative',
-      overflow: 'hidden'
+      overflow: 'auto',
+      WebkitOverflowScrolling: 'touch'
     }}>
       {/* Camo Pattern Background */}
       <div style={{
@@ -189,25 +196,22 @@ function Login() {
           marginBottom: '3rem',
           position: 'relative'
         }}>
-          {/* Shield Icon */}
+          {/* Logo */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             marginBottom: '1.5rem'
           }}>
-            <svg
-              width="64"
-              height="64"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#d97706"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
+            <img
+              src="/bob_logo.png"
+              alt="Band of Brothers"
+              style={{
+                width: '80px',
+                height: '80px',
+                objectFit: 'contain'
+              }}
+            />
           </div>
 
           <h1 style={{
