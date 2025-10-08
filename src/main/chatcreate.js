@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { ArrowLeft } from 'lucide-react';
 import './chatcreate.css';
 
 function ChatCreate() {
@@ -368,24 +369,24 @@ function ChatCreate() {
           top: '70px',
           left: '20px',
           zIndex: '1000',
-          height: '36px',
-          padding: '0 16px',
-          fontSize: '0.9rem',
+          height: '32px',
+          padding: '0 12px',
+          fontSize: '0.8rem',
           boxShadow: '0 2px 8px rgba(217, 119, 6, 0.3)',
-          borderRadius: '18px',
+          borderRadius: '16px',
           background: 'linear-gradient(to right, #b45309, #d97706)',
           color: '#ffffff',
           border: 'none',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '6px',
+          gap: '4px',
           cursor: 'pointer',
           fontWeight: 'bold',
           letterSpacing: '0.05em'
         }}
       >
-        <span style={{ fontSize: '1.2rem' }}>←</span>
+        <ArrowLeft size={16} />
         <span>BACK</span>
       </button>
 

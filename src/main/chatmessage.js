@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { ArrowLeft } from 'lucide-react';
 import MemberListModal from '../components/MemberListModal';
 import ReportModal from '../components/ReportModal';
 import {
@@ -495,7 +496,7 @@ function ChatMessage() {
       {/* Header */}
       <div className="chat-header">
         <button className="back-button-chat" onClick={handleBackToChat}>
-          <span style={{ fontSize: '1.2rem' }}>←</span>
+          <ArrowLeft size={16} />
           <span>BACK</span>
         </button>
         <div className="chat-info">
