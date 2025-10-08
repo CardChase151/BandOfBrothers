@@ -38,14 +38,15 @@ function Admin2() {
     switch (type) {
       case 'training':
         return [
-          'Setting appointments',
-          'First appointment',
-          'Preparing a plan',
-          'Second appointment',
-          'Investments',
-          'Deliver Policy',
-          'Leadership training',
-          'Additional content'
+          'Masculine Heart',
+          'Larger Story',
+          'Poser',
+          'Wounds',
+          'New Name',
+          'Warfare',
+          'Rescue the Beauty',
+          'Hearts of Your Children',
+          'Counsel and Direction'
         ];
       case 'licensing':
         return [
