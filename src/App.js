@@ -9,8 +9,8 @@ import ForgotPassword from './onboarding/forgotPassword';
 import NewPassword from './onboarding/newPassword';
 import Home from './main/home';
 import Training from './main/training';
-import Schedule from './main/schedule';
-import Licensing from './main/licensing';
+import Retreats from './main/retreats';
+import Merch from './main/merch';
 import Prayer from './main/prayer';
 import NewRepStart from './main/newrepstart';
 import ChatDash from './main/chatdash';
@@ -75,8 +75,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/newrepstart" element={<NewRepStart />} />
           <Route path="/training" element={<Training />} />
-          <Route path="/schedule" element={<Schedule />} />
-          <Route path="/licensing" element={<Licensing />} />
+          <Route path="/schedule" element={<Retreats />} />
+          <Route path="/licensing" element={<Merch />} />
+          <Route path="/merch" element={<Merch />} />
           <Route path="/prayer" element={<Prayer />} />
           <Route path="/chat" element={<ChatDash />} />
           <Route path="/chat/create" element={<ChatCreate />} />

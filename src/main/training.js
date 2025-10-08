@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { Search, Shield, BookOpen, Sword, Heart, Crown, Flame, Users, Compass } from 'lucide-react';
+import { Search, UserX, BookOpen, Sword, Heart, Crown, Flame, Users, Compass, Shield } from 'lucide-react';
 import BottomNav from '../bottomnav/bottomnav';
 
 function Training() {
@@ -19,7 +19,7 @@ function Training() {
   const sessions = [
     { id: 1, title: 'Masculine Heart', icon: Heart },
     { id: 2, title: 'Larger Story', icon: BookOpen },
-    { id: 3, title: 'Poser', icon: Shield },
+    { id: 3, title: 'Poser', icon: UserX },
     { id: 4, title: 'Wounds', icon: Sword },
     { id: 5, title: 'New Name', icon: Crown },
     { id: 6, title: 'Warfare', icon: Flame },
