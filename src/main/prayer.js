@@ -789,6 +789,9 @@ const Prayer = () => {
                     <div>
                       <div className="author-name">
                         {prayer.is_anonymous ? 'Brother in Christ' : prayer.author_name}
+                        {prayer.update_count > 0 && !prayer.has_prayed && (
+                          <span className="update-badge-inline">New Update</span>
+                        )}
                         {isMyPrayer && prayer.is_anonymous && (
                           <span className="my-prayer-badge">Your prayer</span>
                         )}
@@ -825,12 +828,6 @@ const Prayer = () => {
                     )}
                   </div>
                 </div>
-
-              {prayer.update_count > 0 && !prayer.has_prayed && (
-                <div className="update-badge">
-                  New Update
-                </div>
-              )}
 
               <div className="prayer-text-container">
                 {isMyPrayer && (
