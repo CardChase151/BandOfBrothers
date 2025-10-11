@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { supabase } from './supabaseClient';
 import Login from './onboarding/login';
 import CreateAccount from './onboarding/createAccount';
+import Welcome from './onboarding/welcome';
 import EmailVerify from './onboarding/emailVerify';
 import EmailConfirm from './onboarding/emailConfirm';
 import ForgotPassword from './onboarding/forgotPassword';
@@ -66,6 +67,7 @@ function App() {
           {/* Authentication Routes */}
           <Route path="/" element={<Login />} />
           <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/welcome" element={<Welcome />} />
           <Route path="/email-verify" element={<EmailVerify />} />
           <Route path="/confirm" element={<EmailConfirm />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
